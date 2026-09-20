@@ -1,23 +1,178 @@
 aid: theloopbreaker-com
 name: Vaultfire Protocol
-description: 'Vaultfire Protocol is a company surfaced via the API Evangelist harvest backlog (source:
-  a2a-registry) and added to the network as a stub for full-pipeline profiling.'
+description: >-
+  Vaultfire Protocol (theloopbreaker.com) is on-chain trust infrastructure for AI agents — "KYA, Know Your
+  Agent". It runs 134 smart contracts across Base, Avalanche, Arbitrum and Polygon for ERC-8004 agent
+  identity, verifiable reputation (Street Cred), partnership and accountability bonds, a USDC task-escrow
+  marketplace, VNS agent names, key delegation (VKP), ZK trust attestations and a cross-chain trust bridge.
+  Its public Agent Hub API exposes 34 free REST operations (OpenAPI 3.1) that read those contracts and
+  return unsigned transactions for the caller to sign, plus 77 x402-priced endpoints paid per call in USDC,
+  an 18-skill A2A agent card, llms.txt, agents.txt, a published Agent Skill and a stdio MCP server on npm.
 url: https://raw.githubusercontent.com/api-evangelist/theloopbreaker-com/refs/heads/main/apis.yml
+image: https://theloopbreaker.com/og-image.png
 x-type: company
 x-source: harvest:a2a-registry
-x-tier: stub
-x-tier-reason: harvest
+x-tier: profiled
+x-tier-reason: enriched
 specificationVersion: '0.20'
 created: '2026-09-19'
 modified: '2026-09-19'
 tags:
+- AI Agents
+- Agent Identity
+- Trust
+- Reputation
+- Blockchain
+- Web3
+- Payments
+- x402
+- MCP
+- A2A
 - Company
-apis: []
+apis:
+- aid: theloopbreaker-com:vaultfire-agent-hub-api
+  name: Vaultfire Agent Hub API
+  description: >-
+    Public REST API over the Vaultfire trust contracts on Base, Avalanche, Arbitrum and Polygon: agent trust
+    profiles and Street Cred scores, ERC-8004 registration and partnership-bond transaction builders, agent
+    discovery and task routing, webhooks, VNS name resolution, task escrow, VKP session keys, ZK/belief
+    attestations, mission and privacy compliance reads, governance, insurance, disputes, bridge state and the
+    full contract address book. Reads are public; routing writes require ERC-8128 signed requests; on-chain
+    writes are returned unsigned for the caller's wallet.
+  image: https://theloopbreaker.com/og-image.png
+  humanURL: https://theloopbreaker.com/start
+  baseURL: https://theloopbreaker.com/api
+  tags:
+  - AI Agents
+  - Agent Identity
+  - Trust
+  - Reputation
+  - Blockchain
+  properties:
+  - type: OpenAPI
+    url: openapi/theloopbreaker-com-openapi.yml
+  - type: OpenAPI
+    name: Provider-hosted OpenAPI 3.1 (served)
+    url: https://theloopbreaker.com/api/openapi.json
+  - type: Documentation
+    url: https://theloopbreaker.com/llms.txt
+  - type: APIReference
+    url: https://theloopbreaker.com/agents.txt
+  - type: GettingStarted
+    url: https://theloopbreaker.com/start
+  - type: Overlay
+    url: overlays/theloopbreaker-com-openapi-overlay.yaml
+  - type: ErrorCatalog
+    url: errors/theloopbreaker-com-problem-types.yml
+  - type: Webhooks
+    url: asyncapi/theloopbreaker-com-webhooks.yml
+  - type: DataModel
+    url: data-model/theloopbreaker-com-data-model.yml
+  - type: MCPServer
+    url: mcp/theloopbreaker-com-mcp.yml
+  - type: ToolCrosswalk
+    url: mcp/theloopbreaker-com-tool-crosswalk.yml
+- aid: theloopbreaker-com:vaultfire-trust-service-x402
+  name: Vaultfire Trust Service (x402)
+  description: >-
+    The priced projection of the same trust surface: 77 endpoints under /api/x402/* (29 priced GET reads, 46
+    priced POST transaction-preparation actions, 2 free) paid per call in USDC on Base mainnet with the x402
+    v2 exact scheme. Each endpoint answers HTTP 402 with a PAYMENT-REQUIRED challenge until paid. Its only
+    machine-readable contract is the x402 discovery manifest at /.well-known/x402.json — there is no OpenAPI
+    for this surface. V3 x402 routes exist in source only and return 503 behind a release gate.
+  image: https://theloopbreaker.com/og-image.png
+  humanURL: https://theloopbreaker.com/SKILL.md
+  baseURL: https://theloopbreaker.com/api/x402
+  tags:
+  - x402
+  - Payments
+  - AI Agents
+  - Trust
+  - USDC
+  properties:
+  - type: X-X402Discovery
+    name: x402 v2 discovery manifest (77 endpoints)
+    url: https://theloopbreaker.com/.well-known/x402.json
+  - type: X-X402Discovery
+    name: x402 manifest (verbatim copy)
+    url: well-known/theloopbreaker-com-x402.json
+  - type: Documentation
+    url: https://theloopbreaker.com/SKILL.md
+  - type: Plans
+    url: plans/theloopbreaker-com-plans-pricing.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: VulnerabilityDisclosure
+  url: security/theloopbreaker-com-vulnerability-disclosure.yml
 - type: Website
   url: https://theloopbreaker.com/
+- type: GettingStarted
+  url: https://theloopbreaker.com/start
+- type: Documentation
+  url: https://theloopbreaker.com/architecture
+- type: TermsOfService
+  url: https://theloopbreaker.com/terms
+- type: PrivacyPolicy
+  url: https://theloopbreaker.com/privacy
+- type: Security
+  url: https://theloopbreaker.com/security
+- type: Support
+  url: https://theloopbreaker.com/partners
+- type: SourceCode
+  url: https://explorer.gitlawb.com/repos/z6MkryiNsYdFEMHv95wxzSQ1vtFXPyVQQrxXdPw3tE5HpfxV/vaultfire
+- type: Pricing
+  url: https://theloopbreaker.com/.well-known/x402.json
+- type: LLMsTxt
+  url: llms/theloopbreaker-com-llms.txt
+- type: LLMsTxt
+  name: llms.txt (served)
+  url: https://theloopbreaker.com/llms.txt
+- type: AgentCard
+  url: a2a/theloopbreaker-com-a2a.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: MCPServer
+  url: mcp/theloopbreaker-com-mcp.yml
+- type: ToolCrosswalk
+  url: mcp/theloopbreaker-com-tool-crosswalk.yml
+- type: WellKnown
+  url: well-known/theloopbreaker-com-well-known.yml
+- type: SecurityTxt
+  url: well-known/theloopbreaker-com-security.txt
+- type: Packages
+  url: packages/theloopbreaker-com-packages.yml
+- type: SDKs
+  url: packages/theloopbreaker-com-packages.yml
+- type: Conformance
+  url: conformance/theloopbreaker-com-conformance.yml
+- type: Conventions
+  url: conventions/theloopbreaker-com-conventions.yml
+- type: Authentication
+  url: authentication/theloopbreaker-com-authentication.yml
+- type: ErrorCatalog
+  url: errors/theloopbreaker-com-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/theloopbreaker-com-lifecycle.yml
+- type: ChangeLog
+  url: changelog/theloopbreaker-com-changelog.yml
+- type: Plans
+  url: plans/theloopbreaker-com-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/theloopbreaker-com-rate-limits.yml
+- type: Webhooks
+  url: asyncapi/theloopbreaker-com-webhooks.yml
+- type: DataModel
+  url: data-model/theloopbreaker-com-data-model.yml
+- type: DomainSecurity
+  url: security/theloopbreaker-com-domain-security.yml
+- type: DataSubjectRequest
+  url: https://theloopbreaker.com/privacy
+x-enrichment:
+  date: '2026-09-19'
+  status: enriched
+  artifacts_added: 36
+  pass: local-v3

@@ -1,0 +1,96 @@
+generated: '2026-09-19'
+method: derived
+source: >-
+  Derived by aligning the 9 tools published in the @vaultfire/mcp-server README (mcp/theloopbreaker-com-mcp.yml)
+  with the 34 operations of the live OpenAPI at https://theloopbreaker.com/api/openapi.json
+  (openapi/theloopbreaker-com-openapi.yml). Confidence is per row. The MCP server does NOT call the REST API —
+  it reads the chain contracts directly over RPC with ethers — so every binding is semantic (same on-chain
+  data, two readers), never a pass-through. inputSchema for a bound tool is the operation's parameters +
+  requestBody in the spec; the tool's real schema needs a local tools/list.
+purpose: >-
+  Bind each agent-facing tool to the machine-readable operation that returns the same data, and record where
+  the REST, MCP, A2A-card and x402 surfaces diverge. None is a superset: REST has 34 free reads/prepares,
+  x402 has 77 priced endpoints with no OpenAPI, MCP has 9 tools including two that SIGN AND SUBMIT
+  transactions that REST only prepares.
+surfaces:
+  rest_openapi: openapi/theloopbreaker-com-openapi.yml        # 34 operations, no securitySchemes, no components.schemas
+  rest_x402: well-known/theloopbreaker-com-x402.json          # 77 priced/free endpoints under /api/x402/*; x402 manifest, not OpenAPI
+  mcp_remote: https://theloopbreaker.com/api/mcp              # advertised; 404 on GET/initialize/tools/list (2026-09-19)
+  mcp_local: npx -y @vaultfire/mcp-server                     # stdio; tools from README, schemas not introspected
+  a2a_card: a2a/theloopbreaker-com-agent-card.json            # 18 skills; no callable JSON-RPC endpoint
+crosswalk:
+  - tool: vaultfire_verify_agent
+    category: trust
+    rest: [getAgentStatus, getBridgeState]
+    binding: rest
+    confidence: high
+    note: getAgentStatus returns registered/bond/trustScore; the "bridge status" component maps to getBridgeState?chain&address.
+  - tool: vaultfire_get_street_cred
+    category: trust
+    rest: [getAgentStatus]
+    binding: rest
+    confidence: high
+    note: Street Cred is the trustScore field of the getAgentStatus response (observed 70 for the deployer wallet); no dedicated REST operation.
+  - tool: vaultfire_get_agent
+    category: identity
+    rest: [getAgentStatus]
+    binding: rest
+    confidence: medium
+    note: Identity fields (name, identityType, registeredAt, active) are a subset of getAgentStatus; the on-chain agentURI the tool returns is not in the REST response.
+  - tool: vaultfire_get_bonds
+    category: bonds
+    rest: [getPartnerships]
+    binding: rest
+    confidence: high
+  - tool: vaultfire_get_reputation
+    category: trust
+    rest: [getAgentStatus, getPerformance]
+    binding: rest
+    confidence: medium
+    note: The README's average rating / feedback count come from ERC8004ReputationRegistry; REST exposes the on-chain rating inside getAgentStatus and oracle attestations via getPerformance. No REST operation returns the registry summary as such.
+  - tool: vaultfire_discover_agents
+    category: discovery
+    rest: [discoverAgents]
+    binding: rest
+    confidence: medium
+    note: The tool filters by capability tags; discoverAgents declares no query parameters in the spec.
+  - tool: vaultfire_protocol_stats
+    category: protocol
+    rest: [getHubStats, getBridgeState]
+    binding: rest
+    confidence: high
+  - tool: vaultfire_register_agent
+    category: identity
+    rest: [registerAgent]
+    binding: rest
+    confidence: medium
+    note: DIVERGENT SEMANTICS — REST registerAgent returns an UNSIGNED transaction for the caller to sign; the MCP tool signs with PRIVATE_KEY and submits it. Same contract call, different custody model.
+  - tool: vaultfire_create_bond
+    category: bonds
+    rest: [createBond]
+    binding: rest
+    confidence: medium
+    note: Same divergence as vaultfire_register_agent — REST prepares, MCP submits an irreversible mainnet transaction.
+mcp_only: []
+rest_only:
+  system: [getHealth]
+  protocol: [getContracts, getERC8004Adapter]
+  agent: [batchAgentStatus, getAgentAnalytics]
+  routing: [routeTask, getRoutingHistory]
+  webhooks: [listWebhooks, registerWebhook, deleteWebhook]
+  tasks: [getTaskStats, prepareTask]
+  keys: [getVKPStatus, prepareVKPAction]
+  identity: [resolveVNS]
+  trust: [getZKTrust, getBeliefAttestation, getFlourishingMetrics, getVouchProfile, getCredentials]
+  compliance: [getMissionCompliance, getPrivacyStatus, getValidationStatus]
+  governance: [getGovernance]
+  insurance: [getInsurance]
+  disputes: [getDisputes]
+coverage:
+  mcp_tools_named: 9
+  mcp_tools_bound: 9
+  mcp_only: 0
+  rest_operations_total: 34
+  rest_operations_with_tool: 8
+  rest_only: 26
+  x402_endpoints_without_openapi: 77

@@ -1,0 +1,60 @@
+generated: '2026-09-19'
+method: searched
+probe: true
+source: https://theloopbreaker.com/privacy
+probed_paths:
+  - {url: https://theloopbreaker.com/accessibility, status: 404}
+  - {url: https://theloopbreaker.com/accessibility/vpat, status: 404}
+  - {url: https://theloopbreaker.com/legal/subprocessors, status: 404}
+  - {url: https://theloopbreaker.com/legal/dpa, status: 404}
+  - {url: https://theloopbreaker.com/privacy/requests, status: 404}
+  - {url: https://theloopbreaker.com/transparency, status: 404}
+  - {url: https://theloopbreaker.com/trust, status: 200, note: 'rewrites to the homepage (same 15,037-byte body) — not a trust page'}
+  - {url: https://theloopbreaker.com/security/sbom, status: 404}
+  - {url: https://theloopbreaker.com/docs/data-residency, status: 404}
+  - {url: https://theloopbreaker.com/ai, status: 404}
+  - {url: https://theloopbreaker.com/ai/transparency, status: 404}
+  - {url: https://theloopbreaker.com/legal/report-content, status: 404}
+  - {url: https://theloopbreaker.com/privacy, status: 200}
+  - {url: https://theloopbreaker.com/terms, status: 200}
+  - {url: https://theloopbreaker.com/security, status: 200}
+signals:
+  data_subject_request:
+    url: https://theloopbreaker.com/privacy
+    section: '5. Your rights'
+    channel: ghostkey316@proton.me
+    stated_sla: null
+    rights_named: [know/access, deletion, opt out of sale or sharing, correction, limit use of sensitive information, non-discrimination (CCPA/CPRA); access, rectification, erasure, restriction, objection, portability, withdrawal of consent, complaint to a supervisory authority (GDPR EEA/UK)]
+    evidence:
+    - source: https://theloopbreaker.com/privacy
+      http_status: 200
+      fetched: '2026-09-19'
+      quote: >-
+        "If you are a California resident, you have the right to: Know what personal information we collect,
+        use, and share; Request deletion of personal information we hold about you; Opt out of 'sale' or
+        'sharing' of personal information (we do neither); Correct inaccurate personal information; Limit the
+        use of sensitive personal information; Be free from discrimination for exercising your rights ...
+        European Economic Area / United Kingdom (GDPR): ... Access your personal data; Rectify inaccurate
+        data; Erase your personal data — subject to legal exceptions and the immutable nature of public
+        blockchains; Restrict processing; Object to processing; Data portability; Withdraw consent at any
+        time; Lodge a complaint with your supervisory authority. ... To exercise these rights, email
+        ghostkey316@proton.me"
+    note: >-
+      A documented request channel and enumerated CCPA/CPRA and GDPR rights inside the privacy policy
+      (Effective/Last Updated April 27, 2026), with the retention limits that constrain it (server logs ~30
+      days; on-chain data permanent and undeletable). No response period is stated, no intake form or API
+      exists (/privacy/requests 404), and the channel is a personal Proton address.
+not_found:
+  sbom: 'no /security/sbom, no SBOM named on /security; SKILL.md points at Sourcify-verified bytecode, which is not a bill of materials'
+  support_lifetime: 'release-status.json states V2 active / V3 disabled but no support period for any version'
+  accessibility_conformance: '/accessibility and /accessibility/vpat 404; no conformance statement on any page'
+  training_data_summary: 'privacy section 2 states "We do not use your data to train AI models without explicit consent" — a use restriction, not a training-data summary'
+  ai_transparency: 'the /security page discloses that internal and external reviews were AI-assisted (Claude Sonnet 4.5; OneDollarAudit/LeftClaw agent), which is audit provenance, not an AI-interaction disclosure to users'
+  global_privacy_control: 'privacy section 9 addresses Do Not Track only ("We do not respond to Do Not Track ... signals"); GPC is not mentioned, so honored is not set'
+  subprocessors: 'privacy section 3 names categories ("Service providers", "Public blockchains", "Legal authorities") with no dated vendor table'
+  data_residency: 'privacy section 7 states data may be "transferred to, stored, and processed in the U.S." with SCCs — a transfer notice, not a residency option'
+  incident_notification: 'no DPA and no stated notification SLA'
+  age_assurance: 'Terms section 1 (18+) and privacy ("not directed to children under 18") are eligibility statements, not an assurance mechanism'
+  notice_and_action: '/legal/report-content 404'
+  transparency_report: '/transparency 404'
+  exit_assistance: 'no export/portability documentation beyond the GDPR portability right named above'

@@ -1,0 +1,36 @@
+generated: '2026-09-19'
+method: searched
+source: >-
+  One provider-published skill saved verbatim from https://theloopbreaker.com/SKILL.md (Agent Skills frontmatter
+  name/description; 33,706 bytes, contract-level: Solidity interfaces, selectors, the 134-contract address
+  index, ecosystem packages and standards). Four packaged skills generated from openapi/theloopbreaker-com-openapi.yml
+  — every step grounded in an operationId verified verbatim in the spec — with the cross-cutting rules from
+  conventions/, errors/, authentication/ and rate-limits/.
+skills:
+  - file: theloopbreaker-com-vaultfire-skill.md
+    name: vaultfire
+    method: searched
+    source: https://theloopbreaker.com/SKILL.md
+    api: null
+    operations: []
+    note: Provider-authored; targets the smart contracts and SDK rather than the REST operations.
+  - file: theloopbreaker-com-check-agent-trust.md
+    name: Check an agent's trust profile before you rely on it
+    method: generated
+    api: openapi/theloopbreaker-com-openapi.yml
+    operations: [getHealth, getAgentStatus, batchAgentStatus, getAgentAnalytics, getPartnerships]
+  - file: theloopbreaker-com-register-and-bond.md
+    name: Register an agent and pledge a partnership bond
+    method: generated
+    api: openapi/theloopbreaker-com-openapi.yml
+    operations: [registerAgent, createBond, getAgentStatus, getPartnerships, getContracts]
+  - file: theloopbreaker-com-route-task.md
+    name: Find and route a task to a trusted agent
+    method: generated
+    api: openapi/theloopbreaker-com-openapi.yml
+    operations: [discoverAgents, routeTask, getRoutingHistory, getTaskStats, prepareTask]
+  - file: theloopbreaker-com-subscribe-webhooks.md
+    name: Subscribe to Vaultfire events with a webhook
+    method: generated
+    api: openapi/theloopbreaker-com-openapi.yml
+    operations: [listWebhooks, registerWebhook, deleteWebhook]

@@ -1,0 +1,59 @@
+generated: '2026-09-19'
+method: probed
+format: flat-error-object
+source: >-
+  The OpenAPI (openapi/theloopbreaker-com-openapi.yml) declares ONLY 2xx responses (200 on 33 operations, 201
+  on registerWebhook) and no error schema, so nothing could be derived from it. Every row below is an error
+  actually observed on 2026-09-19 against https://theloopbreaker.com/api, plus the 429 that
+  https://theloopbreaker.com/llms.txt ("Rate Limits") documents. Vaultfire does not use RFC 9457
+  application/problem+json.
+envelope:
+  media_type: application/json
+  shape: '{ "error": string, "reason"?: string, "code"?: string, "retryable"?: boolean, "requestId"?: string }'
+  note: >-
+    The key set varies by route family: /api/agent/* returns {"error"} or {"error","reason"}; the webhook
+    route adds a machine "code"; the V3 gate returns a schema-stamped object with code, retryable and
+    requestId; x402 routes return an x402 v2 challenge object. Unknown /api/* paths return the site's HTML 404
+    page (text/html), not JSON.
+problems:
+  - status: 400
+    title: Missing required query parameter
+    observed: 'GET /api/agent/status -> {"error":"Missing required query param: address"}'
+    source_operation: openapi/theloopbreaker-com-openapi.yml#getAgentStatus
+    remediation: Send the parameter the spec marks required (address; chain on the per-chain reads).
+  - status: 401
+    title: Unsigned request (ERC-8128)
+    observed: 'POST /api/agent/route {} -> {"error":"unsigned","reason":"Request is missing ERC-8128 Signature and/or Signature-Input headers"}'
+    source_operation: openapi/theloopbreaker-com-openapi.yml#routeTask
+    remediation: Sign the request with the sender wallet per ERC-8128 (Signature + Signature-Input headers). The OpenAPI does not declare this requirement.
+  - status: 402
+    title: Payment required (x402 v2)
+    observed: 'GET /api/x402/bonds/agent-bond-status -> {"x402Version":2,"error":"Payment required","protocol":"x402","price":"$0.0100 USDC","networks":["eip155:8453"],"accepts":[...],"discovery":"https://theloopbreaker.com/.well-known/x402.json"} with a PAYMENT-REQUIRED header'
+    source_operation: well-known/theloopbreaker-com-x402.json
+    remediation: Pay the quoted USDC amount on Base to accepts[].payTo via the x402 facilitator and retry with PAYMENT-SIGNATURE; PAYMENT-RESPONSE is exposed on success.
+  - status: 404
+    title: Not found (HTML)
+    observed: 'GET /api/agent/nonexistent, GET/POST /api/mcp -> 14,415-byte text/html Next.js not-found page'
+    remediation: No JSON body; detect by content-type. Note that the advertised MCP endpoint /api/mcp is one of these.
+  - status: 429
+    title: Rate limit exceeded
+    observed: documented only (llms.txt) — not triggered
+    documented: 'Retry-After header (seconds) on 429; limit 120 requests per minute'
+    remediation: Honour Retry-After; see rate-limits/theloopbreaker-com-rate-limits.yml.
+  - status: 503
+    title: Feature not configured
+    observed: 'POST /api/agent/webhooks {} -> {"error":"webhook write service is not configured","code":"webhook_auth_unconfigured"}'
+    source_operation: openapi/theloopbreaker-com-openapi.yml#registerWebhook
+    remediation: Not transient — the write service is switched off; do not retry in a loop.
+  - status: 503
+    title: V3 release gate closed
+    observed: 'GET /api/v3/x402/health -> {"schema":"vaultfire.v3.release-gate.v1","protocolVersion":"3.0.0","error":"Vaultfire V3 x402 routes are disabled pending explicit read-only release approval","code":"v3_x402_release_gate_closed","retryable":false,"releaseMode":"disabled","requestId":"v3r_..."}'
+    remediation: retryable is false by design; use the V2 surface (see lifecycle/theloopbreaker-com-lifecycle.yml).
+  - status: 503
+    title: x402-Email disabled
+    observed: 'GET /.well-known/x402-email.json -> {"name":"x402-Email","releaseStatus":"disabled_pending_readiness_evidence",...}'
+    remediation: Do not submit a payment payload; the verifier is not advertised by this release.
+machine_codes_observed: [webhook_auth_unconfigured, v3_x402_release_gate_closed]
+spec_gap: >-
+  contract_quality note — 0 of 34 operations declare a 4xx response; the observed 400/401/402/503 behaviours
+  are undocumented in the spec. Captured in overlays/theloopbreaker-com-openapi-overlay.yaml.

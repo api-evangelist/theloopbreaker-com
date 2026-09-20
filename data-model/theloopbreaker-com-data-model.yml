@@ -1,0 +1,93 @@
+generated: '2026-09-19'
+method: derived
+source: openapi/theloopbreaker-com-openapi.yml
+description: >-
+  The OpenAPI declares no components.schemas and no response schemas, so there are no $ref links to walk.
+  Entities and relationships below are derived from the operations' parameters, request bodies and tags,
+  the live getAgentStatus response fields (2026-09-19), the agent card's x-vaultfire contract map, and
+  SKILL.md's description of the on-chain model. Every entity is an on-chain record keyed by an EVM address
+  or a contract-issued id; the API is a read/prepare layer over those contracts.
+identifiers:
+  address: 0x-prefixed 40-hex EVM wallet address — the primary key for Agent across every operation
+  chain: base | avalanche | arbitrum | polygon — every entity exists per chain; Base is the hub
+  agentId: ERC-721 tokenId on the chain's ERC8004IdentityRegistry (SKILL.md); not exposed by the REST reads
+  bondId: 'integer (getAgentStatus.bondId: 5)'
+  disputeId: query parameter of getDisputes
+  webhook_id: 'wh_... prefix (llms.txt)'
+  vnsName: '<name>.vns (getAgentStatus.vnsName: agent-card.vns)'
+entities:
+  - name: Agent
+    key: address (+ chain)
+    fields: [address, chain, registered, vnsName, name, identityType, description, capabilities, active, registeredAt, hasBond, bondActive, bondId, bondCount, bondTier, bondAmountEth, bondAmountWei, trustScore, explorerUrl]
+    operations: [getAgentStatus, batchAgentStatus, registerAgent, discoverAgents, getAgentAnalytics]
+    contract: ERC8004IdentityRegistry
+  - name: PartnershipBond
+    key: bondId (+ chain)
+    fields: [walletAddress, agentAddress, amountEth, tier]
+    operations: [createBond, getPartnerships]
+    contract: AIPartnershipBondsV2
+  - name: AccountabilityBond
+    operations: []
+    contract: AIAccountabilityBondsV2
+    note: Referenced by the agent card and SKILL.md; no REST operation in the free API (priced x402 routes only).
+  - name: VNSName
+    key: name (+ chain)
+    operations: [resolveVNS]
+    contract: VaultfireNameService (none on Avalanche — resolves via the identity registry)
+  - name: Task
+    key: taskId (+ chain)
+    fields: [walletAddress, usdcAmount, description, deadline]
+    operations: [getTaskStats, prepareTask]
+    contract: VaultfireTaskEscrow
+  - name: Routing
+    operations: [routeTask, getRoutingHistory]
+    note: Off-chain matching record with XMTP delivery status.
+  - name: Webhook
+    key: webhook_id
+    fields: [address, url, events, chain, signing_secret]
+    operations: [listWebhooks, registerWebhook, deleteWebhook]
+  - name: SessionKey / Delegation / KeyWallet (VKP)
+    operations: [getVKPStatus, prepareVKPAction]
+    contract: VKPSessionKeyManager, VKPDelegationRegistry, VKPFactory
+  - name: Attestation (ZK trust, belief)
+    operations: [getZKTrust, getBeliefAttestation]
+    contract: VaultfireTrustAttestation, BeliefAttestationVerifier, ProductionBeliefAttestationVerifier, DilithiumAttestor
+  - name: Credential
+    operations: [getCredentials]
+    contract: VaultfireCapabilityCredentials
+  - name: Dispute
+    key: disputeId (+ chain)
+    operations: [getDisputes]
+    contract: VaultfireDisputeResolution
+  - name: InsurancePool / Contributor
+    operations: [getInsurance]
+    contract: VaultfireBondInsurancePool
+  - name: VouchPosition
+    operations: [getVouchProfile]
+    contract: VaultfireReputationStaking
+  - name: PerformanceAttestation
+    operations: [getPerformance]
+    contract: VaultfireTrustOracle
+  - name: BridgeState
+    operations: [getBridgeState]
+    contract: VaultfireTeleporterBridge
+  - name: Governance proposal
+    operations: [getGovernance]
+    contract: MultisigGovernance
+  - name: Contract (address book)
+    operations: [getContracts, getERC8004Adapter]
+    note: 134 contracts across 4 chains; getContracts returns addresses + ABIs + verified selectors.
+relationships:
+  - {from: Agent, to: PartnershipBond, type: has_many, via: address -> walletAddress / agentAddress}
+  - {from: PartnershipBond, to: Agent, type: belongs_to, via: agentAddress}
+  - {from: Agent, to: VNSName, type: has_one, via: vnsName}
+  - {from: Agent, to: Webhook, type: has_many, via: address}
+  - {from: Agent, to: Task, type: has_many, via: walletAddress (requester); assigned agent via routing}
+  - {from: Agent, to: Credential, type: has_many, via: address}
+  - {from: Agent, to: Dispute, type: has_many, via: party address}
+  - {from: Agent, to: VouchPosition, type: has_one, via: address}
+  - {from: Agent, to: PerformanceAttestation, type: has_many, via: address}
+  - {from: Agent, to: BridgeState, type: has_one, via: address + chain (recognition)}
+  - {from: PartnershipBond, to: InsurancePool, type: belongs_to, via: coverage}
+  - {from: Agent, to: 'SessionKey / Delegation', type: has_many, via: walletAddress}
+render: null

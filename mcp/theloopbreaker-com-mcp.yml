@@ -1,0 +1,87 @@
+generated: '2026-09-19'
+method: searched
+status: published
+source: https://www.npmjs.com/package/@vaultfire/mcp-server
+description: >-
+  Vaultfire ships an official MCP server as the npm package @vaultfire/mcp-server (bin vaultfire-mcp-server),
+  a local stdio server that reads the four chains over JSON-RPC with ethers and exposes 9 tools and 2
+  resources. The provider ALSO advertises a hosted remote endpoint — llms.txt ("MCP Integration": url
+  https://theloopbreaker.com/api/mcp, transport http), agents.txt (MCP-Endpoint / MCP-Transport: http), the
+  <meta name="agent-mcp"> tag on every page, and /api/health reports "mcp": true — but that endpoint does not
+  exist: on 2026-09-19 GET, POST initialize and POST tools/list (Accept: application/json, text/event-stream)
+  all returned the site's 404 HTML shell. The remote surface is therefore recorded as advertised-but-absent
+  and deployment.mode is local-stdio, not both. Tool names and descriptions are taken verbatim from the
+  package README on npm; input schemas were not introspected (a stdio server has to be installed and run to
+  answer tools/list).
+server:
+  name: vaultfire
+  transport: stdio
+  install: npx -y @vaultfire/mcp-server
+  package: https://www.npmjs.com/package/@vaultfire/mcp-server
+  version: 1.0.2
+  published: '2026-04-29'
+  source: https://github.com/Ghostkey316/vaultfire-mcp-server
+  source_status: 404
+  env:
+    VAULTFIRE_CHAIN: 'optional; base (default) | avalanche | arbitrum | polygon'
+    PRIVATE_KEY: 'optional; enables the two write tools — submits real, irreversible mainnet transactions'
+    VAULTFIRE_RPC_URL: 'optional; custom RPC for the selected chain'
+  clients_documented: [Claude Desktop, Cursor, generic npx]
+advertised_remote:
+  url: https://theloopbreaker.com/api/mcp
+  transport: http
+  advertised_in:
+  - https://theloopbreaker.com/llms.txt
+  - https://theloopbreaker.com/agents.txt
+  - 'https://theloopbreaker.com (meta name="agent-mcp")'
+  - 'https://theloopbreaker.com/api/health ("endpoints.mcp": true)'
+  probed: '2026-09-19'
+  results:
+  - {method: GET, status: 404, content_type: text/html}
+  - {method: 'POST initialize', status: 404, content_type: text/html}
+  - {method: 'POST tools/list', status: 404, content_type: text/html}
+  verdict: not served
+deployment:
+  mode: local-stdio
+  endpoint: null
+  install: npx -y @vaultfire/mcp-server
+  package: https://www.npmjs.com/package/@vaultfire/mcp-server
+  auth: none
+  auth_note: Read tools need no credential; the two write tools require a PRIVATE_KEY environment variable (a wallet key, not an API key).
+  verified: probed
+  verified_note: Remote endpoint probed (404); stdio package verified on the npm registry (metadata + README); tools not live-introspected.
+tools:
+- name: vaultfire_verify_agent
+  description: 'Full trust verification: identity, bonds, Street Cred, reputation, bridge status'
+  access: read
+- name: vaultfire_get_street_cred
+  description: Get Street Cred score (0-95) and tier
+  access: read
+- name: vaultfire_get_agent
+  description: On-chain identity data (URI, type, registration date, active status)
+  access: read
+- name: vaultfire_get_bonds
+  description: All partnership bonds for an address
+  access: read
+- name: vaultfire_get_reputation
+  description: Reputation data (average rating, feedback count, verified %)
+  access: read
+- name: vaultfire_discover_agents
+  description: Find agents by capability tags
+  access: read
+- name: vaultfire_protocol_stats
+  description: 'Protocol stats: total agents, bonds, bonded value, bridge sync'
+  access: read
+- name: vaultfire_register_agent
+  description: Register an AI agent on-chain (ERC-8004)
+  access: write
+  requires: PRIVATE_KEY
+- name: vaultfire_create_bond
+  description: Create a partnership bond with economic stake
+  access: write
+  requires: PRIVATE_KEY
+resources:
+- uri: vaultfire://chains
+  description: All 4 supported chains with contract addresses and chain details
+- uri: vaultfire://scoring
+  description: Street Cred scoring formula and tier definitions

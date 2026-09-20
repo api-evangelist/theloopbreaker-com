@@ -1,0 +1,91 @@
+{
+  "schemaVersion": "1.0",
+  "site": "https://theloopbreaker.com",
+  "description": "Canonical release boundary for Vaultfire V2 production payments and the V3 public source candidate.",
+  "versions": {
+    "v2": {
+      "label": "V2 — active",
+      "status": "active",
+      "deployment": "Base mainnet",
+      "payments": {
+        "protocol": "x402",
+        "protocolVersion": 2,
+        "scheme": "exact",
+        "network": "eip155:8453",
+        "chainId": 8453,
+        "asset": {
+          "symbol": "USDC",
+          "address": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"
+        },
+        "payTo": "0xfA15Ee28939B222B0448261A22156070f0A7813C",
+        "manifest": "https://theloopbreaker.com/.well-known/x402.json",
+        "endpointCounts": {
+          "total": 77,
+          "priced": 75,
+          "free": 2,
+          "methods": {
+            "POST": 46,
+            "GET": 31
+          },
+          "pricedMethods": {
+            "POST": 46,
+            "GET": 29
+          }
+        }
+      }
+    },
+    "v3": {
+      "label": "V3 — source-only, disabled",
+      "status": "source_only_disabled",
+      "deployed": false,
+      "activated": false,
+      "paymentsEnabled": false,
+      "page": "https://theloopbreaker.com/v3",
+      "source": {
+        "explorer": "https://explorer.gitlawb.com/repos/z6MkryiNsYdFEMHv95wxzSQ1vtFXPyVQQrxXdPw3tE5HpfxV/vaultfire",
+        "tag": "v3-source-2026-08-27",
+        "commit": "bf4b97f65b7032c778d137bb52a432afc4615b51",
+        "tree": "a1fd90c26ae676c87a10e7d3e614e84961b2990c",
+        "tagObject": "d9757c125d547968f80d4c61bea08f6638b33dd6",
+        "v3SrcTree": "0a521a25501cd9fe6a74401c99fde450128b22c9"
+      },
+      "testedTooling": {
+        "tag": "v3-tooling-2026-08-30-r2",
+        "tagObject": "49b520805f543d72dcaae6d285fade0ec0fc4025",
+        "commit": "241ce24db4c1417acbf936c5b412352531aba2f1",
+        "tree": "4486751cce5bcf3dfdbd34d124d72384916f77e0",
+        "v3SrcTree": "0a521a25501cd9fe6a74401c99fde450128b22c9",
+        "verifiesFrozenSourceTag": "v3-source-2026-08-27"
+      },
+      "evidencePublication": {
+        "tag": "v3-evidence-2026-08-30-r3",
+        "tagObject": "6f39cb9428e1f265164736812e02fd84a42152eb",
+        "commit": "1be0f7e791ffc4ea68bb35228bc8fcac0ff302da",
+        "tree": "e401714961b852aeb54cdf0b2ef62e615ae9e0b7",
+        "release": "https://theloopbreaker.com/v3/releases/v3-production-evidence-2026-08-30-r3/",
+        "result": "https://theloopbreaker.com/v3/releases/v3-production-evidence-2026-08-30-r3/evidence/result.json",
+        "checksums": "https://theloopbreaker.com/v3/releases/v3-production-evidence-2026-08-30-r3/SHA256SUMS",
+        "historyArtifacts": {
+          "status": "withheld",
+          "reason": "Full Git-history bundles, bundle fragments, and raw environment logs are not public pending dedicated secret, path, and history review."
+        }
+      },
+      "productionWebsite": {
+        "identity": "https://theloopbreaker.com/api/health",
+        "releaseRecord": "https://theloopbreaker.com/.well-known/production-release.json",
+        "releaseRecordChecksum": "https://theloopbreaker.com/.well-known/production-release.json.sha256"
+      }
+    }
+  },
+  "discovery": {
+    "releaseStatus": "https://theloopbreaker.com/.well-known/release-status.json",
+    "productionRelease": "https://theloopbreaker.com/.well-known/production-release.json",
+    "productionReleaseChecksum": "https://theloopbreaker.com/.well-known/production-release.json.sha256",
+    "productionReleaseChecksumAlgorithm": "sha256",
+    "agent": "https://theloopbreaker.com/.well-known/agent.json",
+    "x402": "https://theloopbreaker.com/.well-known/x402.json",
+    "agentsTxt": "https://theloopbreaker.com/agents.txt",
+    "llmsTxt": "https://theloopbreaker.com/llms.txt",
+    "v3": "https://theloopbreaker.com/v3"
+  }
+}

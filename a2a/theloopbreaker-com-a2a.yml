@@ -1,0 +1,150 @@
+generated: '2026-09-19'
+method: probed
+source: https://theloopbreaker.com/.well-known/agent-card.json
+card:
+  file: a2a/theloopbreaker-com-agent-card.json
+discovery:
+  path: /.well-known/agent-card.json
+  canonical: true
+  host: theloopbreaker.com
+  note: >-
+    The canonical A2A card is served from the apex host and identically from www.theloopbreaker.com and
+    from the API-prefixed alias https://theloopbreaker.com/api/.well-known/agent-card.json that llms.txt and
+    agents.txt advertise (all three return the same 15,525-byte JSON object). The legacy
+    /.well-known/agent.json also answers 200, but it is NOT an A2A card: it is Vaultfire's own site manifest
+    (schema_version 1.0, protocol "vaultfire", capabilities as a string array, endpoints/chains/x402 blocks,
+    no protocolVersion, no skills). It is saved verbatim alongside as
+    a2a/theloopbreaker-com-agent-legacy-manifest.json because it names the discovery graph (x402 manifest,
+    release-status, llms.txt, OpenAPI), but it is not graded as a card. Ownership is not in question: the
+    card's provider.organization is "Vaultfire Protocol" with provider.url https://theloopbreaker.com, the
+    same host serving the OpenAPI (servers[] https://theloopbreaker.com/api), the security.txt and the
+    x402 manifest.
+x-evidence:
+  fetched: '2026-09-19'
+  url: https://theloopbreaker.com/.well-known/agent-card.json
+  http_status: 200
+  content_type: application/json
+  body_bytes: 15525
+  body_parses_as: JSON object with AgentCard shape (protocolVersion, name, url, version, capabilities, skills, provider)
+  corroborating_probes:
+  - url: https://www.theloopbreaker.com/.well-known/agent-card.json
+    http_status: 200
+    note: byte-identical to the apex card
+  - url: https://theloopbreaker.com/api/.well-known/agent-card.json
+    http_status: 200
+    note: alias advertised in llms.txt (#22) and agents.txt (A2A-Agent-Card); byte-identical
+  - url: https://theloopbreaker.com/.well-known/agent.json
+    http_status: 200
+    note: 16,052-byte Vaultfire site manifest, not an A2A card (see discovery.note)
+  - url: https://theloopbreaker.com/
+    http_status: 405
+    note: >-
+      The card's url is the site root. A JSON-RPC message/send POST to it returns 405 Method Not Allowed
+      with an empty body — there is no A2A JSON-RPC endpoint behind the declared url; /api/a2a is 404.
+      The card is a discovery and skill-description document, and the callable surface it describes is
+      the REST API (openapi/) and the stdio MCP package, not an A2A task endpoint.
+agent_card:
+  name: Vaultfire Agent Hub
+  description: >-
+    The trust infrastructure for AI agents. 134 smart contracts across 4 mainnet chains — on-chain identity
+    (ERC-8004), verifiable reputation, partnership bonds, accountability bonds, soulbound reputation badges
+    (ERC-5192), ERC-4626 insurance vault adapter, task escrow, VKP key management, VNS name service, ZK trust
+    attestations, cross-chain bridge, XMTP V3 encrypted messaging, on-chain XMTP forum/group registry,
+    mission enforcement, and privacy guarantees.
+  url: https://theloopbreaker.com
+  version: 3.4.0
+  documentation_url: https://theloopbreaker.com/llms.txt
+  provider:
+    organization: Vaultfire Protocol
+    url: https://theloopbreaker.com
+  capabilities:
+    streaming: false
+    push_notifications: true
+    state_transition_history: true
+  authentication:
+    schemes: [none]
+    note: All read endpoints are public. Write endpoints return unsigned transactions for the caller to sign.
+  default_input_modes: [application/json]
+  default_output_modes: [application/json]
+  skill_count: 18
+  skills:
+  - {id: agent-identity, name: Agent Identity (ERC-8004)}
+  - {id: vns-name-service, name: Vaultfire Name Service (VNS)}
+  - {id: trust-profile, name: Trust Profile & Street Cred}
+  - {id: partnership-bonds, name: AI Partnership Bonds}
+  - {id: accountability-bonds, name: AI Accountability Bonds}
+  - {id: task-escrow, name: Task Marketplace & Escrow}
+  - {id: vkp-keys, name: Vaultfire Key Protocol (VKP)}
+  - {id: trust-attestation, name: ZK Trust Attestation}
+  - {id: belief-attestation, name: Belief Attestation}
+  - {id: mission-enforcement, name: Mission Enforcement}
+  - {id: privacy-protection, name: Privacy & Anti-Surveillance}
+  - {id: flourishing-metrics, name: Flourishing Metrics Oracle}
+  - {id: governance, name: Multisig Governance}
+  - {id: validation-registry, name: Validation Registry}
+  - {id: erc8004-adapter, name: ERC-8004 Adapter}
+  - {id: cross-chain-bridge, name: Cross-Chain Bridge}
+  - {id: agent-discovery, name: Agent Discovery}
+  - {id: messaging, name: Messaging}
+  extensions:
+    x-vaultfire: >-
+      Vendor extension carrying protocol, hubChain, supportedChains, totalContracts (134), chainBreakdown,
+      identityStandard (ERC-8004), nameService, trustScoring (Street Cred 0-95, on-chain rating 0-10000) and
+      the per-chain contract address book.
+conformance:
+  spec: A2A 1.0.0
+  grade: conformant
+  protocol_version: 0.3.0
+  preferred_transport: null
+  transport: 'JSONRPC (0.3.0 default; preferredTransport not declared, no additionalInterfaces)'
+  hard_checks:
+    capabilities_is_object: true
+    protocol_version_present: true
+    skills_is_array: true
+  optional_fields:
+    default_input_modes: true
+    default_output_modes: true
+    preferred_transport: false
+  grade_basis: >-
+    Graded against the A2A hard checks. capabilities is an OBJECT (streaming, pushNotifications,
+    stateTransitionHistory as fields). protocolVersion is present at the top level ("0.3.0", the 0.3-era
+    placement). skills is an ARRAY of 18 skills, each carrying id, name, description, tags and examples.
+    defaultInputModes and defaultOutputModes are both declared. preferredTransport is absent; under 0.3.0 the
+    transport defaults to JSONRPC, so this is a missing optional, not a hard failure.
+  deviations:
+  - field: authentication
+    observed: '0.2-era authentication.schemes ["none"] block'
+    note: >-
+      A2A 0.3.0 replaced the top-level `authentication` object with `securitySchemes` + `security`. A 0.3/1.0
+      reader ignores this block and sees no declared security at all — which, for this card, happens to be
+      the truth (reads are public), but the field is not where the spec puts it.
+  - field: url
+    observed: 'https://theloopbreaker.com (the website root)'
+    note: >-
+      The spec's `url` is the agent's A2A service endpoint. A JSON-RPC POST to it returns 405 with an empty
+      body, so no A2A task surface is reachable at the declared url. An A2A client that trusts the card will
+      fail on its first message/send.
+  - field: skills[].inputModes / outputModes / securityRequirements
+    observed: absent on every skill
+    note: >-
+      All 18 skills inherit the card-level application/json modes; none declares a per-skill mode or security
+      requirement.
+  - field: x-vaultfire
+    observed: vendor extension object at the top level
+    note: >-
+      Not an A2A `capabilities.extensions[]` entry; a bare x- key that a strict reader drops. Harmless, but the
+      on-chain address book it carries is invisible to A2A tooling.
+  - field: /.well-known/agent.json
+    observed: served, but a different document (Vaultfire site manifest) than the canonical card
+    note: >-
+      A legacy-path client receives capabilities as a string array and no skills — a `flavored` document —
+      while the canonical path is conformant. The two paths should serve the same card.
+surface_relationship:
+  note: >-
+    Vaultfire publishes four agent surfaces that are NOT projections of one another. A2A: an 18-skill
+    discovery card with no callable JSON-RPC endpoint. REST: 34 public operations at
+    https://theloopbreaker.com/api (openapi/), plus 77 x402-priced endpoints under /api/x402/* described only
+    by the x402 manifest (well-known/theloopbreaker-com-x402.json). MCP: the advertised remote endpoint
+    https://theloopbreaker.com/api/mcp returns 404; the real server is the stdio npm package
+    @vaultfire/mcp-server (9 tools) — see mcp/theloopbreaker-com-mcp.yml. The card's skills map to REST tags,
+    not to MCP tools: e.g. `messaging` (XMTP) and `governance` have REST reads but no MCP tool.

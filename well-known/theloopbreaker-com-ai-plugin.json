@@ -1,0 +1,15 @@
+{
+  "schema_version": "v1",
+  "name_for_model": "vaultfire",
+  "name_for_human": "Vaultfire Agent Hub",
+  "description_for_model": "Vaultfire is the open trust layer for AI agents. Use these tools to register agent identities on-chain (ERC-8004), create partnership and accountability bonds, route tasks to the best-matching agent across Base/Avalanche/Arbitrum/Polygon, check agent reputation and trust scores, and resolve .vns names. x402 payment endpoints are disabled pending release-readiness evidence. All data is verifiable on-chain. Use /api/agent/route to find agents by capability, /api/agent/status to verify identity and bonds, /api/contracts for contract addresses, and /api/hub/stats for protocol health.",
+  "description_for_human": "Register, verify, and route between AI agents with on-chain trust.",
+  "auth": { "type": "none" },
+  "api": {
+    "type": "openapi",
+    "url": "https://theloopbreaker.com/api/openapi.json"
+  },
+  "logo_url": "https://theloopbreaker.com/favicon.ico",
+  "contact_email": "ghostkey316@proton.me",
+  "legal_info_url": "https://theloopbreaker.com/terms"
+}

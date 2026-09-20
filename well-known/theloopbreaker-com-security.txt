@@ -1,0 +1,5 @@
+Contact: mailto:ghostkey316@proton.me
+Expires: 2027-08-27T23:59:59Z
+Preferred-Languages: en
+Canonical: https://theloopbreaker.com/.well-known/security.txt
+Policy: https://theloopbreaker.com/security

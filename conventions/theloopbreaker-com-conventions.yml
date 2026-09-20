@@ -1,0 +1,113 @@
+generated: '2026-09-19'
+method: searched
+source: https://theloopbreaker.com/llms.txt
+description: >-
+  Cross-cutting request/response semantics of the Vaultfire Agent Hub API, from llms.txt, agents.txt, SKILL.md,
+  the Terms of Service, the OpenAPI (openapi/theloopbreaker-com-openapi.yml) and live 2026-09-19 probes.
+  Cross-links: authentication/, errors/, lifecycle/, rate-limits/, asyncapi/ (webhooks).
+base_url: https://theloopbreaker.com/api
+authentication:
+  style: public reads; ERC-8128 signed HTTP requests on routing writes; x402 USDC payment on the priced surface; self-custody wallet signing for on-chain writes
+  ref: authentication/theloopbreaker-com-authentication.yml
+idempotency:
+  coverage: none
+  header: null
+  scope: []
+  retention: null
+  note: >-
+    No idempotency contract is documented for the free /api/* surface. Two adjacent facts are recorded so they
+    are not mistaken for one: (1) the x402 402 challenge's CORS allow-list names Idempotency-Key
+    (access-control-allow-headers: Content-Type, PAYMENT-SIGNATURE, Idempotency-Key), which shows the priced
+    routes accept the header but says nothing about replay semantics, key scope or retention, and no page,
+    manifest or README documents it; (2) the V3 source-review page mentions idempotency, but V3 is
+    source-only and disabled (lifecycle/). The write operations themselves (registerAgent, createBond,
+    prepareTask, prepareVKPAction) return unsigned transactions and mutate nothing server-side; replay
+    protection for the eventual on-chain write is the chain's nonce, not an API mechanism.
+  band_gate_note: coverage none — no Idempotency pointer emitted.
+dry_run_mode:
+  status: prepare-then-sign
+  note: >-
+    Not a dry-run flag, but the write endpoints are structurally rehearsable — POST /agent/register,
+    /agent/bond, /agent/tasks and /agent/keys return the unsigned transaction (or contract address + ABI)
+    for inspection, and nothing happens until the caller signs and broadcasts it. An agent can therefore
+    review the exact calldata, target contract and value before committing.
+reversibility:
+  grade: documented
+  na: false
+  surfaces:
+    - write: registerAgent (POST /agent/register -> ERC8004IdentityRegistry.registerAgent on-chain)
+      reversal: none
+      window: null
+      docs: https://theloopbreaker.com/terms
+      note: 'Terms section 3: "We never have access to your private keys and cannot reverse, refund, or modify on-chain transactions." Registration is a permanent on-chain record.'
+    - write: createBond (POST /agent/bond -> AIPartnershipBondsV2.createBond, value >= 0.01 ETH)
+      reversal: bond distribution / return by contract logic
+      window: null
+      docs: https://theloopbreaker.com/start
+      note: >-
+        Not a caller-initiated reversal. /start states the stake "returns to the human" if human autonomy
+        drops during the partnership and Terms section 4 states the bond "may be distributed to a harmed
+        counterparty ... if a dispute is resolved against you"; the term length is set on the bond, not
+        stated as a general window. No cancel or refund operation exists in the API.
+    - write: prepareTask (POST /agent/tasks -> VaultfireTaskEscrow.createTask, USDC)
+      reversal: escrow release / dispute
+      window: null
+      docs: https://theloopbreaker.com/agents.txt
+      note: >-
+        Escrow settles "on-chain based on outcome" (/architecture); the x402 manifest lists approve-work and
+        accept-bid actions and llms.txt a dispute surface (getDisputes), but no cancel-task operation, refund
+        path or time window is stated anywhere probed. Task-Escrow-Fee 1% (agents.txt).
+    - write: prepareVKPAction (POST /agent/keys — createWallet, createSession, delegate, revoke, revokeSession)
+      reversal: revoke / revokeSession
+      window: null
+      docs: https://theloopbreaker.com/api/openapi.json
+      note: The action enum itself carries the reversal (revoke, revokeSession) for delegate/createSession; no window stated.
+    - write: registerWebhook (POST /agent/webhooks)
+      reversal: deleteWebhook (DELETE /agent/webhooks?id=wh_...)
+      window: null
+      docs: https://theloopbreaker.com/llms.txt
+      note: A documented, caller-initiated reversal with no stated window. Registration currently returns 503 webhook_auth_unconfigured.
+  summary: >-
+    Reversal paths are documented for two of five write surfaces (deleteWebhook; VKP revoke/revokeSession)
+    and no window is stated for any — hence `documented`, not `verified`. The on-chain writes are explicitly
+    irreversible by the provider's own Terms and MCP README ("Transactions are irreversible"), which is the
+    thing an agent needs to know BEFORE calling registerAgent or createBond with real ETH.
+pagination:
+  style: unknown
+  params: []
+  response_fields: []
+  note: llms.txt describes GET /agent/discover as "paginated" but the OpenAPI declares no parameters and no response schema for it; nothing documents page size, cursor or offset.
+field_expansion: none documented
+sparse_fields: none documented
+metadata: none documented
+request_tracing:
+  header: null
+  note: 'No request-id header is documented or returned on /api/agent/* (only Vercel''s x-vercel-id). The V3 gate response body carries a "requestId" (v3r_...), which is a body field, not a header, and V3 is disabled.'
+versioning:
+  ref: lifecycle/theloopbreaker-com-lifecycle.yml
+  style: unversioned path; semver in info.version (3.4.0); V2/V3 protocol boundary published in /.well-known/release-status.json
+chain_selection:
+  param: chain
+  values: [base, avalanche, arbitrum, polygon]
+  default: base
+  note: Passed as a query parameter on reads and a body field on writes; required on the per-chain reads (getTaskStats, getVKPStatus, getGovernance, getERC8004Adapter, ...). registerWebhook defaults chain to "all".
+address_format: 0x-prefixed 40-hex-character EVM address (llms.txt, routeTask validation)
+error_envelope:
+  ref: errors/theloopbreaker-com-problem-types.yml
+  shape: '{"error": string, "reason"?, "code"?}'
+  rfc9457: false
+rate_limit_signaling:
+  ref: rate-limits/theloopbreaker-com-rate-limits.yml
+  documented_headers: [X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, Retry-After]
+  observed_on_live_200: none
+payments:
+  x402:
+    manifest: well-known/theloopbreaker-com-x402.json
+    challenge: '402 + PAYMENT-REQUIRED header (base64 JSON), body {"x402Version":2,"error":"Payment required","price":"$0.0100 USDC","accepts":[...]}'
+    request_header: PAYMENT-SIGNATURE
+    settled_header: PAYMENT-RESPONSE
+    network: eip155:8453
+    asset: USDC 0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913
+    payTo: 0xfA15Ee28939B222B0448261A22156070f0A7813C
+    max_timeout_seconds: 60
+    price_range: '$0.01 – $0.50 per call (75 priced), 2 free'

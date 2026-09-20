@@ -1,0 +1,46 @@
+generated: '2026-09-19'
+method: searched
+source: https://theloopbreaker.com/.well-known/release-status.json
+versioning:
+  scheme: semver in info.version; no version segment in the URL (base https://theloopbreaker.com/api)
+  current: 3.4.0
+  observed: 'info.version 3.4.0 in /api/openapi.json and the agent card; /api/health reports "version":"3.3"'
+  docs: https://theloopbreaker.com/.well-known/release-status.json
+  release_boundary:
+    v2:
+      label: V2 — active
+      status: active
+      deployment: Base mainnet
+      payments: x402 v2 exact USDC (eip155:8453); 77 endpoints (75 priced, 2 free)
+    v3:
+      label: V3 — source-only, disabled
+      status: source_only_disabled
+      deployed: false
+      activated: false
+      payments_enabled: false
+      page: https://theloopbreaker.com/v3
+      source_tag: v3-source-2026-08-27
+      source_commit: bf4b97f65b7032c778d137bb52a432afc4615b51
+      live_gate: 'GET /api/v3/x402/health -> 503 v3_x402_release_gate_closed, retryable false'
+  production_release:
+    manifest: https://theloopbreaker.com/.well-known/production-release.json
+    commit: 4314e5a9fd4f11830775fafaaae0a8fc4b9bb89f
+    tree: 4a584ae439dd6f05905e362c1d7fcc816cd31147
+    source: gitlawb://did:key:z6MkryiNsYdFEMHv95wxzSQ1vtFXPyVQQrxXdPw3tE5HpfxV/vaultfire
+deprecation:
+  policy_url: null
+  sunset_header: false
+  deprecation_header: false
+  note: No deprecation or sunset policy is published; the only lifecycle statement is the V2/V3 release boundary above. No operation in the OpenAPI is marked deprecated.
+sla:
+  url: null
+  uptime_target: null
+  note: 'Terms of Service section 7 disclaims any warranty that the Service "will be uninterrupted, timely, secure, or error-free".'
+status_page: null
+health_endpoint:
+  url: https://theloopbreaker.com/api/health
+  operationId: getHealth
+  observed_2026_09_19: 'status healthy; per-chain ok with latency and block numbers for base/avalanche/arbitrum/polygon; endpoints.x402 {total 77, priced 75, free 2}; endpoints.mcp true (but /api/mcp is 404); endpoints.xmtp true'
+  note: A live health probe, not a status page — there is no incident history or uptime record.
+deprecated_operations: []
+support_period: not stated

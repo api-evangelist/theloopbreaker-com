@@ -1,0 +1,56 @@
+generated: '2026-09-19'
+method: searched
+spec_type: WebhookCatalog
+source: https://theloopbreaker.com/llms.txt
+description: >-
+  Vaultfire publishes no AsyncAPI document (probed /asyncapi.yaml, /asyncapi.json, /api/asyncapi.json — 404;
+  nothing in the npm packages or SKILL.md). It does document a webhook surface: llms.txt steps 17-18 and the
+  registerWebhook operation in the OpenAPI, whose `events` enum is the event catalog below (16 events, taken
+  verbatim from openapi/theloopbreaker-com-openapi.yml). Registration returns a webhook ID and a signing
+  secret. LIVE STATE: on 2026-09-19 POST /api/agent/webhooks answered 503
+  {"error":"webhook write service is not configured","code":"webhook_auth_unconfigured"}, so the surface is
+  documented and wired in the contract but not currently accepting registrations. No delivery payload schema,
+  signature header, retry policy or replay guidance is published anywhere probed.
+management:
+  register:
+    operationId: registerWebhook
+    method: POST
+    path: /api/agent/webhooks
+    response: '201 — webhook ID (wh_...) and signing secret'
+  list:
+    operationId: listWebhooks
+    method: GET
+    path: '/api/agent/webhooks?address=0x...'
+    note: without address, returns the valid-events catalog
+  delete:
+    operationId: deleteWebhook
+    method: DELETE
+    path: '/api/agent/webhooks?id=wh_...'
+  scope: 'per agent address; chain defaults to "all"'
+  live_status_2026_09_19: '503 webhook_auth_unconfigured on register'
+security:
+  scheme: shared signing secret returned at registration
+  header: undocumented
+  algorithm: undocumented
+events:
+  - {name: bond.created, family: bonds}
+  - {name: bond.activated, family: bonds}
+  - {name: bond.completed, family: bonds}
+  - {name: reputation.updated, family: reputation}
+  - {name: credential.issued, family: credentials}
+  - {name: credential.revoked, family: credentials}
+  - {name: dispute.filed, family: disputes}
+  - {name: dispute.resolved, family: disputes}
+  - {name: bridge.synced, family: bridge}
+  - {name: insurance.claim_filed, family: insurance}
+  - {name: insurance.payout, family: insurance}
+  - {name: agent.registered, family: identity}
+  - {name: vouch.received, family: reputation-staking}
+  - {name: vouch.slashed, family: reputation-staking}
+  - {name: task.assigned, family: tasks}
+  - {name: task.completed, family: tasks}
+event_count: 16
+payload_schema: not published
+other_event_surfaces:
+  xmtp: 'Agent-to-agent messaging and task delivery go over XMTP V3 (MLS), per llms.txt and SKILL.md; not a webhook and not described by any published schema.'
+  on_chain: 'Contract events on Base/Avalanche/Arbitrum/Polygon are the primary event source; ABIs are returned by getContracts.'

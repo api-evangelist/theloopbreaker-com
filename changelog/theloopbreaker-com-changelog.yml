@@ -1,0 +1,60 @@
+generated: '2026-09-19'
+method: searched
+source: https://theloopbreaker.com/.well-known/release-status.json
+description: >-
+  Vaultfire publishes no dated changelog page (/changelog 404, none on npm READMEs). What it does publish is a
+  set of signed, tagged release records: the release-status and production-release manifests in /.well-known/,
+  the GitLawb push log for the canonical repository, and npm release dates. The entries below are those
+  records — every date is one the provider or a registry stamped, and the window is the recent release
+  boundary, not a history.
+scheme: semver (API info.version) + dated source tags (vN-<kind>-YYYY-MM-DD[-rN])
+current_version: 3.4.0
+current_version_source: https://theloopbreaker.com/api/openapi.json (info.version) and the agent card; /api/health reports 3.3
+sources:
+  - https://theloopbreaker.com/.well-known/release-status.json
+  - https://theloopbreaker.com/.well-known/production-release.json
+  - https://explorer.gitlawb.com/repos/z6MkryiNsYdFEMHv95wxzSQ1vtFXPyVQQrxXdPw3tE5HpfxV/vaultfire
+  - https://www.npmjs.com/package/@vaultfire/agent-sdk
+entries:
+  - date: '2026-09-01'
+    version: website commit 4314e5a9 (production-release.json)
+    kind: release
+    breaking: false
+    highlights:
+      - Production website release recorded in /.well-known/production-release.json (tree 4a584ae4), the commit the GitLawb main branch was pushed to on 2026-09-01
+      - Tag v3-rc2-unsigned-2026-09-01 and branch v3/final-remediation-2026-08-31-rc2 pushed to GitLawb (V3 remains source-only)
+  - date: '2026-08-30'
+    version: v3-evidence-2026-08-30-r3 / v3-tooling-2026-08-30-r2
+    kind: evidence-publication
+    breaking: false
+    highlights:
+      - V3 production-evidence release with SHA256SUMS and result.json published under /v3/releases/
+      - Git-history bundles and raw environment logs withheld "pending dedicated secret, path, and history review"
+  - date: '2026-08-27'
+    version: v3-source-2026-08-27 (commit bf4b97f6)
+    kind: source-release
+    breaking: false
+    highlights:
+      - V3 source frozen and published for review; not deployed, not activated, payments disabled (release-status.json)
+  - date: '2026-07-08'
+    version: V2 Base surface (36 contracts)
+    kind: security-review
+    breaking: false
+    highlights:
+      - External AI-assisted first-pass review of the V2 Base-mainnet surface via OneDollarAudit / LeftClaw agent #21548, recorded through ERC-8004 (/security page)
+  - date: '2026-06-15'
+    version: '@vaultfire/agent-sdk 0.8.1'
+    kind: sdk
+    breaking: false
+    highlights: [Latest first-party SDK release on npm]
+  - date: '2026-04-29'
+    version: '@vaultfire/mcp-server 1.0.2, @vaultfire/a2a 1.0.2, @vaultfire/langchain 1.0.1, @vaultfire/x402-guard 1.0.1'
+    kind: sdk
+    breaking: false
+    highlights: [Last release of the MCP server and integration packages]
+  - date: '2026-04-27'
+    version: legal
+    kind: policy
+    breaking: false
+    highlights: [Terms of Service and Privacy Policy effective / last updated]
+window_note: Older history (V1, the April 2026 package launches, the January 2026 internal audit) is referenced on /security and SKILL.md but carries no changelog entries.

@@ -1,0 +1,155 @@
+generated: '2026-09-19'
+method: searched
+source: >-
+  npm registry search for "vaultfire" (registry.npmjs.org/-/v1/search) and the per-package metadata
+  endpoints registry.npmjs.org/@vaultfire/<name>, cross-checked against the "Ecosystem Packages" table in
+  https://theloopbreaker.com/SKILL.md and the "A2A Integration" / "MCP Integration" sections of
+  https://theloopbreaker.com/llms.txt. PyPI (pypi.org/pypi/vaultfire/json) returns 404; no Maven, NuGet, Go,
+  RubyGems, Packagist or crates.io packages were found. Every npm package is published by the single
+  maintainer ghostkey316 <ghostkey316@proton.me>, which is the same address in the provider's security.txt,
+  ai-plugin.json, privacy policy and partner-intake page — first-party is established by that identity, not by
+  the package scope alone. All repository URLs point at github.com/Ghostkey316/*, which returned 404 (user and
+  repos) on 2026-09-19; the canonical source is now the GitLawb mirror named in SKILL.md.
+version_checked: '2026-09-19'
+packages:
+  - language: typescript
+    registry: npm
+    name: "@vaultfire/agent-sdk"
+    url: https://www.npmjs.com/package/@vaultfire/agent-sdk
+    install: npm install @vaultfire/agent-sdk ethers
+    official: true
+    version: 0.8.1
+    published: '2026-06-15'
+    license: MIT
+    repository: https://github.com/Ghostkey316/vaultfire-sdk
+    repository_status: 404
+    source: https://explorer.gitlawb.com/repos/z6MkryiNsYdFEMHv95wxzSQ1vtFXPyVQQrxXdPw3tE5HpfxV/vaultfire
+    note: The canonical TypeScript SDK per SKILL.md. README marks the protocol "Alpha Software", unaudited. 8 releases from 0.1.0 to 0.8.1; the most recently released first-party package.
+  - language: typescript
+    registry: npm
+    name: "@vaultfire/mcp-server"
+    url: https://www.npmjs.com/package/@vaultfire/mcp-server
+    install: npx -y @vaultfire/mcp-server
+    official: true
+    version: 1.0.2
+    published: '2026-04-29'
+    license: MIT
+    bin: vaultfire-mcp-server
+    repository: https://github.com/Ghostkey316/vaultfire-mcp-server
+    repository_status: 404
+    note: Local stdio MCP server (see mcp/theloopbreaker-com-mcp.yml); 9 tools, 2 resources.
+  - language: typescript
+    registry: npm
+    name: "@vaultfire/a2a"
+    url: https://www.npmjs.com/package/@vaultfire/a2a
+    install: npm install @vaultfire/a2a
+    official: true
+    version: 1.0.2
+    published: '2026-04-29'
+    license: MIT
+    repository: https://github.com/Ghostkey316/vaultfire-a2a
+    repository_status: 404
+    note: A2A bridge named in llms.txt — enrichAgentCard, verifyAgentCard, discoverTrustedAgents.
+  - language: typescript
+    registry: npm
+    name: "@vaultfire/langchain"
+    url: https://www.npmjs.com/package/@vaultfire/langchain
+    install: npm install @vaultfire/langchain
+    official: true
+    version: 1.0.1
+    published: '2026-04-29'
+    license: MIT
+    repository: https://github.com/Ghostkey316/vaultfire-langchain
+    repository_status: 404
+  - language: typescript
+    registry: npm
+    name: "@vaultfire/x402-guard"
+    url: https://www.npmjs.com/package/@vaultfire/x402-guard
+    install: npm install @vaultfire/x402-guard
+    official: true
+    version: 1.0.1
+    published: '2026-04-29'
+    license: MIT
+    repository: https://github.com/Ghostkey316/vaultfire-x402-guard
+    repository_status: 404
+    note: Pre-payment trust check for x402 wallets; depends on @vaultfire/langchain.
+  - language: typescript
+    registry: npm
+    name: "@vaultfire/openai-agents"
+    url: https://www.npmjs.com/package/@vaultfire/openai-agents
+    install: npm install @vaultfire/openai-agents
+    official: true
+    version: 1.0.0
+    published: '2026-04-16'
+    license: MIT
+    repository: https://github.com/Ghostkey316/vaultfire-openai-agents
+    repository_status: 404
+  - language: typescript
+    registry: npm
+    name: "@vaultfire/vercel-ai"
+    url: https://www.npmjs.com/package/@vaultfire/vercel-ai
+    install: npm install @vaultfire/vercel-ai
+    official: true
+    version: 1.0.0
+    published: '2026-04-16'
+    license: MIT
+    repository: https://github.com/Ghostkey316/vaultfire-vercel-ai
+    repository_status: 404
+  - language: typescript
+    registry: npm
+    name: "@vaultfire/enterprise"
+    url: https://www.npmjs.com/package/@vaultfire/enterprise
+    install: npm install @vaultfire/enterprise
+    official: true
+    version: 1.0.0
+    published: '2026-04-16'
+    license: MIT
+    repository: https://github.com/Ghostkey316/vaultfire-enterprise
+    repository_status: 404
+    note: Bridges enterprise IAM (Okta, Azure AD, OIDC) to on-chain agent identity.
+  - language: typescript
+    registry: npm
+    name: "@vaultfire/x402"
+    url: https://www.npmjs.com/package/@vaultfire/x402
+    install: npm install @vaultfire/x402
+    official: true
+    version: 1.0.0
+    published: '2026-04-15'
+    license: MIT
+    repository: https://github.com/Ghostkey316/vaultfire-x402
+    repository_status: 404
+  - language: typescript
+    registry: npm
+    name: "@vaultfire/xmtp"
+    url: https://www.npmjs.com/package/@vaultfire/xmtp
+    install: npm install @vaultfire/xmtp
+    official: true
+    version: 1.0.0
+    published: '2026-04-15'
+    license: MIT
+    repository: https://github.com/Ghostkey316/vaultfire-xmtp
+    repository_status: 404
+  - language: typescript
+    registry: npm
+    name: "@vaultfire/vns"
+    url: https://www.npmjs.com/package/@vaultfire/vns
+    install: npm install @vaultfire/vns
+    official: true
+    version: 1.0.0
+    published: '2026-04-15'
+    license: MIT
+    repository: https://github.com/Ghostkey316/vaultfire-vns
+    repository_status: 404
+unregistered:
+  note: >-
+    SKILL.md's Ecosystem Packages table also names vaultfire-agentkit (Coinbase AgentKit), vaultfire-crewai,
+    hermes-vaultfire (Hermes Agent skill), vaultfire-keyprotocol, vaultfire-explorer and a
+    langchain-integration submission. None of these resolves on npm or PyPI; each links only to the GitLawb
+    monorepo, so they are recorded here as source-only and not counted as SDKs.
+  entries: [vaultfire-agentkit, vaultfire-crewai, hermes-vaultfire, vaultfire-keyprotocol, vaultfire-explorer]
+currency:
+  note: >-
+    The API spec is version 3.4.0 and the website release commit is dated 2026-09-01 (GitLawb), while ten of
+    the eleven npm packages have had no release since 2026-04-29 and the SDK since 2026-06-15. The SDK README
+    still describes bonds/tasks as Base-only writes "in a follow-up release". The packages lag the API by
+    roughly three to five months.

@@ -1,0 +1,57 @@
+generated: '2026-09-19'
+method: probed
+source: https://theloopbreaker.com/.well-known/x402.json
+description: >-
+  Vaultfire has no pricing page (/pricing 404) and no subscription tiers. Its published prices are
+  machine-readable: the x402 v2 discovery manifest lists a per-call USDC price for each of 77 endpoints
+  under /api/x402/*, and the 402 challenge on each endpoint restates it. The free REST API (34 operations
+  in openapi/) has no price. Protocol fees come from agents.txt ("Task-Escrow-Fee: 1%") and SKILL.md ("0% on
+  registration, 1% on completed task escrows"). Values were read from the manifest on 2026-09-19 and
+  confirmed against two live 402 challenges.
+currency: USDC
+network: Base mainnet (eip155:8453)
+asset: 0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913
+payTo: 0xfA15Ee28939B222B0448261A22156070f0A7813C
+facilitator: https://api.cdp.coinbase.com/platform/v2/x402
+billing_model: pay-per-call (x402 exact scheme); no accounts, keys, invoices or subscriptions
+plan_count: 2
+plans:
+  - name: Free public API
+    price: 0
+    currency: USD
+    billing_period: none
+    included: 34 REST operations at https://theloopbreaker.com/api (reads + unsigned-transaction builders) and 2 free x402 endpoints (/api/x402/trust/health, /api/x402/oracle/chainlink-status)
+    limits: 120 requests/minute documented (rate-limits/theloopbreaker-com-rate-limits.yml)
+    overage: null
+  - name: x402 priced endpoints (pay per call)
+    price: '0.01 – 0.50 per call'
+    currency: USDC
+    billing_period: per-request
+    included: 75 priced endpoints under /api/x402/* (29 GET reads, 46 POST transaction-preparation actions)
+    price_distribution:
+      '$0.01': 14
+      '$0.02': 14
+      '$0.03': 1
+      '$0.05': 4
+      '$0.10': 7
+      '$0.15': 5
+      '$0.20': 7
+      '$0.25': 10
+      '$0.30': 7
+      '$0.40': 2
+      '$0.50': 4
+      free: 2
+    limits: maxTimeoutSeconds 60 per payment challenge
+    overage: null
+    examples:
+      - {path: /api/x402/bonds/agent-bond-status, method: GET, price: '$0.01', observed_402: true}
+      - {path: /api/x402/actions/accept-bid, method: POST, price: '$0.20', observed_402: true}
+      - {path: /api/x402/actions/approve-work, method: POST, price: '$0.20'}
+protocol_fees:
+  registration: 0%
+  task_escrow: 1% of completed escrow (agents.txt Task-Escrow-Fee; SKILL.md)
+  partnership_bond_minimum: 0.01 ETH (Bronze); Silver 0.05, Gold 0.1, Platinum 0.5 (llms.txt)
+enterprise: 'Partner intake by email only (https://theloopbreaker.com/partners); no enterprise tier or contract pricing is published.'
+disabled_surfaces:
+  - {name: V3 x402 routes, status: '503 v3_x402_release_gate_closed'}
+  - {name: x402-Email, status: '503 disabled_pending_readiness_evidence'}

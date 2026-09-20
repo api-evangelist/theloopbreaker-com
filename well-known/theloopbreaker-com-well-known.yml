@@ -1,0 +1,135 @@
+generated: '2026-09-19'
+method: probed
+description: >-
+  Results of probing the /.well-known/ discovery surface on every host the record knows: the registrable
+  domain theloopbreaker.com (which is also the API host — the OpenAPI servers[] is
+  https://theloopbreaker.com/api — and the docs host, since llms.txt/SKILL.md/agents.txt live at its root),
+  its www alias, and the advertised MCP host, which is the same apex (https://theloopbreaker.com/api/mcp).
+  Status is the HTTP code observed at fetch time. 404s on this Next.js site return a 14,415-byte HTML
+  not-found shell (meta robots noindex), so every 404 row below is a real miss, not an SPA catch-all.
+  Documents that returned a real, correctly-typed payload were saved verbatim. Extra rows record Vaultfire's
+  own discovery documents that sit in /.well-known/ outside the closed probe list (x402.json,
+  release-status.json, production-release.json, agent-card.json, agent.json) because each was fetched and
+  parsed; the agent card is filed under a2a/.
+hosts:
+- host: https://theloopbreaker.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    type: text/plain
+    file: theloopbreaker-com-security.txt
+    note: RFC 9116 fields Contact (mailto:ghostkey316@proton.me), Expires 2027-08-27, Preferred-Languages, Canonical, Policy (https://theloopbreaker.com/security). No Encryption or Acknowledgments field.
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 200
+    type: application/json
+    file: theloopbreaker-com-ai-plugin.json
+    note: schema_version v1 plugin manifest; api.type openapi -> https://theloopbreaker.com/api/openapi.json (the spec saved in openapi/); auth none; contact ghostkey316@proton.me.
+  - path: /.well-known/ucp.json
+    status: 404
+  - path: /.well-known/acp.json
+    status: 404
+  - path: /.well-known/aauth-resource.json
+    status: 404
+  - path: /.well-known/apis.json
+    status: 404
+  - path: /apis.json
+    status: 404
+  - path: /apis.yml
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 200
+    type: application/json
+    file: ../a2a/theloopbreaker-com-agent-card.json
+    note: A2A agent card, graded in a2a/theloopbreaker-com-a2a.yml.
+  - path: /.well-known/agent.json
+    status: 200
+    type: application/json
+    file: ../a2a/theloopbreaker-com-agent-legacy-manifest.json
+    note: Vaultfire site manifest (schema_version 1.0), not an A2A card.
+  - path: /.well-known/x402.json
+    status: 200
+    type: application/json
+    file: theloopbreaker-com-x402.json
+    note: x402 v2 discovery manifest — 77 endpoints (75 priced, 2 free) under /api/x402/*, USDC on Base (eip155:8453), facilitator api.cdp.coinbase.com. The only machine-readable contract for the priced surface; not OpenAPI-shaped.
+  - path: /.well-known/release-status.json
+    status: 200
+    type: application/json
+    file: theloopbreaker-com-release-status.json
+    note: Canonical release boundary — V2 active on Base, V3 source-only/disabled with tagged source identity.
+  - path: /.well-known/production-release.json
+    status: 200
+    type: application/json
+    file: theloopbreaker-com-production-release.json
+    note: Deployed commit/tree of the production website and the x402 endpoint counts; claims a combined OpenAPI of 97 operations that is not published anywhere probed (the served spec has 34).
+  - path: /.well-known/x402-email.json
+    status: 503
+    note: JSON body states the x402-Email verifier is "disabled pending independently reviewed release-readiness evidence".
+  - path: /.well-known/mcp.json
+    status: 404
+- host: https://www.theloopbreaker.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    type: text/plain
+    file: theloopbreaker-com-security.txt
+    note: byte-identical to the apex document
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 200
+    type: application/json
+    file: theloopbreaker-com-ai-plugin.json
+  - path: /.well-known/ucp.json
+    status: 404
+  - path: /.well-known/acp.json
+    status: 404
+  - path: /.well-known/aauth-resource.json
+    status: 404
+  - path: /.well-known/apis.json
+    status: 404
+  - path: /apis.json
+    status: 404
+  - path: /apis.yml
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 200
+    type: application/json
+    file: ../a2a/theloopbreaker-com-agent-card.json
+  - path: /.well-known/agent.json
+    status: 200
+    type: application/json
+    file: ../a2a/theloopbreaker-com-agent-legacy-manifest.json
+- host: https://theloopbreaker.com/api
+  note: >-
+    API base and advertised MCP host (https://theloopbreaker.com/api/mcp). RFC 9728 places protected-resource
+    metadata on the resource server, so the API-prefixed paths were probed as well. The MCP endpoint itself
+    returns 404 to GET, to POST initialize and to POST tools/list, so there is no resource server to describe.
+  documents:
+  - path: /api/.well-known/agent-card.json
+    status: 200
+    type: application/json
+    file: ../a2a/theloopbreaker-com-agent-card.json
+    note: alias advertised in llms.txt and agents.txt; byte-identical to the apex card
+  - path: /api/.well-known/oauth-protected-resource
+    status: 404
+  - path: /api/mcp/.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/oauth-protected-resource/api/mcp
+    status: 404
+  - path: /api/mcp
+    status: 404
+    note: advertised MCP endpoint; 404 HTML shell on GET and on JSON-RPC POST (initialize, tools/list)

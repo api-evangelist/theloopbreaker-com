@@ -1,0 +1,24 @@
+{
+  "schemaVersion": "1.0",
+  "site": "https://theloopbreaker.com",
+  "environment": "production",
+  "source": {
+    "repository": "gitlawb://did:key:z6MkryiNsYdFEMHv95wxzSQ1vtFXPyVQQrxXdPw3tE5HpfxV/vaultfire",
+    "commit": "4314e5a9fd4f11830775fafaaae0a8fc4b9bb89f",
+    "tree": "4a584ae439dd6f05905e362c1d7fcc816cd31147"
+  },
+  "x402": {
+    "protocolVersion": 2,
+    "endpointCounts": {
+      "total": 77,
+      "priced": 75,
+      "free": 2
+    },
+    "paymentNetwork": "eip155:8453",
+    "paymentAsset": "USDC"
+  },
+  "openapi": {
+    "combinedOperations": 97
+  },
+  "releaseStatus": "https://theloopbreaker.com/.well-known/release-status.json"
+}

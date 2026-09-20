@@ -1,0 +1,83 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the Vaultfire Agent Hub API
+  version: 1.0.0
+  x-generated: '2026-09-19'
+  x-method: derived
+  x-source: >-
+    Observed behaviour from live 2026-09-19 probes of https://theloopbreaker.com/api and the provider's own
+    llms.txt; the original contract at openapi/theloopbreaker-com-openapi.yml (verbatim copy in
+    openapi/_original/) is not modified. This overlay records what the served spec leaves out — the ERC-8128
+    signature requirement, the observed 4xx/5xx shapes, the documented rate-limit headers — so a consumer
+    applying it gets a contract closer to the wire.
+extends: ./theloopbreaker-com-openapi.yml
+actions:
+  - target: $.info
+    description: Point at the provider's own agent-facing documentation and the discovery graph.
+    update:
+      x-llms-txt: https://theloopbreaker.com/llms.txt
+      x-agent-card: https://theloopbreaker.com/.well-known/agent-card.json
+      x-x402-manifest: https://theloopbreaker.com/.well-known/x402.json
+      x-release-status: https://theloopbreaker.com/.well-known/release-status.json
+  - target: $.components
+    description: Declare the signature scheme the live API enforces on routing writes (observed 401 "unsigned").
+    update:
+      securitySchemes:
+        erc8128HttpSignature:
+          type: http
+          scheme: signature
+          description: >-
+            ERC-8128 signed HTTP request — Signature and Signature-Input headers (RFC 9421 profile) signed by
+            the sender wallet. Observed required on POST /agent/route; the served spec declares no security.
+      responses:
+        BadRequest:
+          description: Missing or invalid required parameter (observed)
+          content:
+            application/json:
+              schema: {type: object, properties: {error: {type: string}}, required: [error]}
+              example: {error: 'Missing required query param: address'}
+        Unsigned:
+          description: Request lacks ERC-8128 Signature / Signature-Input headers (observed)
+          content:
+            application/json:
+              schema: {type: object, properties: {error: {type: string}, reason: {type: string}}, required: [error]}
+              example: {error: unsigned, reason: Request is missing ERC-8128 Signature and/or Signature-Input headers}
+        RateLimited:
+          description: Rate limit exceeded — 120 requests/minute per llms.txt (documented, not observed)
+          headers:
+            Retry-After: {schema: {type: integer}, description: seconds to wait}
+        NotConfigured:
+          description: Feature switched off server-side (observed on webhook registration)
+          content:
+            application/json:
+              schema: {type: object, properties: {error: {type: string}, code: {type: string}}, required: [error, code]}
+              example: {error: webhook write service is not configured, code: webhook_auth_unconfigured}
+      headers:
+        X-RateLimit-Limit: {schema: {type: integer}, description: requests per minute (documented value 120)}
+        X-RateLimit-Remaining: {schema: {type: integer}}
+        X-RateLimit-Reset: {schema: {type: integer}, description: Unix timestamp when the window resets}
+  - target: $.paths['/agent/route'].post
+    description: Attach the observed security requirement and the observed 401.
+    update:
+      security: [{erc8128HttpSignature: []}]
+      responses:
+        '400': {$ref: '#/components/responses/BadRequest'}
+        '401': {$ref: '#/components/responses/Unsigned'}
+        '429': {$ref: '#/components/responses/RateLimited'}
+  - target: $.paths['/agent/status'].get
+    update:
+      responses:
+        '400': {$ref: '#/components/responses/BadRequest'}
+        '429': {$ref: '#/components/responses/RateLimited'}
+  - target: $.paths['/agent/webhooks'].post
+    update:
+      responses:
+        '503': {$ref: '#/components/responses/NotConfigured'}
+        '429': {$ref: '#/components/responses/RateLimited'}
+  - target: $.paths['/agent/register'].post
+    description: State the custody model the response description implies.
+    update:
+      x-reversibility: none once the returned transaction is signed and broadcast (Terms section 3); the API call itself mutates nothing.
+  - target: $.paths['/agent/bond'].post
+    update:
+      x-reversibility: none by the caller; bond distribution/return is contract logic (see conventions/).
