@@ -30,56 +30,15 @@ tags:
 - A2A
 - Company
 apis:
-- aid: theloopbreaker-com:vaultfire-agent-hub-api
-  name: Vaultfire Agent Hub API
-  description: >-
-    Public REST API over the Vaultfire trust contracts on Base, Avalanche, Arbitrum and Polygon: agent trust
-    profiles and Street Cred scores, ERC-8004 registration and partnership-bond transaction builders, agent
-    discovery and task routing, webhooks, VNS name resolution, task escrow, VKP session keys, ZK/belief
-    attestations, mission and privacy compliance reads, governance, insurance, disputes, bridge state and the
-    full contract address book. Reads are public; routing writes require ERC-8128 signed requests; on-chain
-    writes are returned unsigned for the caller's wallet.
-  image: https://theloopbreaker.com/og-image.png
-  humanURL: https://theloopbreaker.com/start
-  baseURL: https://theloopbreaker.com/api
-  tags:
-  - AI Agents
-  - Agent Identity
-  - Trust
-  - Reputation
-  - Blockchain
-  properties:
-  - type: OpenAPI
-    url: openapi/theloopbreaker-com-openapi.yml
-  - type: OpenAPI
-    name: Provider-hosted OpenAPI 3.1 (served)
-    url: https://theloopbreaker.com/api/openapi.json
-  - type: Documentation
-    url: https://theloopbreaker.com/llms.txt
-  - type: APIReference
-    url: https://theloopbreaker.com/agents.txt
-  - type: GettingStarted
-    url: https://theloopbreaker.com/start
-  - type: Overlay
-    url: overlays/theloopbreaker-com-openapi-overlay.yaml
-  - type: ErrorCatalog
-    url: errors/theloopbreaker-com-problem-types.yml
-  - type: Webhooks
-    url: asyncapi/theloopbreaker-com-webhooks.yml
-  - type: DataModel
-    url: data-model/theloopbreaker-com-data-model.yml
-  - type: MCPServer
-    url: mcp/theloopbreaker-com-mcp.yml
-  - type: ToolCrosswalk
-    url: mcp/theloopbreaker-com-tool-crosswalk.yml
 - aid: theloopbreaker-com:vaultfire-trust-service-x402
   name: Vaultfire Trust Service (x402)
   description: >-
-    The priced projection of the same trust surface: 77 endpoints under /api/x402/* (29 priced GET reads, 46
-    priced POST transaction-preparation actions, 2 free) paid per call in USDC on Base mainnet with the x402
-    v2 exact scheme. Each endpoint answers HTTP 402 with a PAYMENT-REQUIRED challenge until paid. Its only
-    machine-readable contract is the x402 discovery manifest at /.well-known/x402.json — there is no OpenAPI
-    for this surface. V3 x402 routes exist in source only and return 503 behind a release gate.
+    The priced projection of the same trust surface: 77 endpoints under /api/x402/* (29 priced GET reads,
+    46 priced POST transaction-preparation actions, 2 free) paid per call in USDC on Base mainnet with
+    the x402 v2 exact scheme. Each endpoint answers HTTP 402 with a PAYMENT-REQUIRED challenge until paid.
+    Its only machine-readable contract is the x402 discovery manifest at /.well-known/x402.json — there
+    is no OpenAPI for this surface. V3 x402 routes exist in source only and return 503 behind a release
+    gate.
   image: https://theloopbreaker.com/og-image.png
   humanURL: https://theloopbreaker.com/SKILL.md
   baseURL: https://theloopbreaker.com/api/x402
@@ -100,12 +59,422 @@ apis:
     url: https://theloopbreaker.com/SKILL.md
   - type: Plans
     url: plans/theloopbreaker-com-plans-pricing.yml
+- aid: theloopbreaker-com:theloopbreaker-com-agent-api
+  name: Vaultfire Protocol Agent API
+  description: Agent identity and trust profiles
+  humanURL: https://theloopbreaker.com/start
+  baseURL: https://theloopbreaker.com/api
+  tags:
+  - Agent
+  properties:
+  - type: OpenAPI
+    url: openapi/theloopbreaker-com-agent-api-openapi.yml
+  - type: Documentation
+    url: https://theloopbreaker.com/llms.txt
+  - type: APIReference
+    url: https://theloopbreaker.com/agents.txt
+  - type: GettingStarted
+    url: https://theloopbreaker.com/start
+  - type: ErrorCatalog
+    url: errors/theloopbreaker-com-problem-types.yml
+  - type: Webhooks
+    url: asyncapi/theloopbreaker-com-webhooks.yml
+  - type: DataModel
+    url: data-model/theloopbreaker-com-data-model.yml
+  - type: ToolCrosswalk
+    url: mcp/theloopbreaker-com-tool-crosswalk.yml
+- aid: theloopbreaker-com:theloopbreaker-com-analytics-api
+  name: Vaultfire Protocol Analytics API
+  description: Agent performance analytics
+  humanURL: https://theloopbreaker.com/start
+  baseURL: https://theloopbreaker.com/api
+  tags:
+  - Analytics
+  properties:
+  - type: OpenAPI
+    url: openapi/theloopbreaker-com-analytics-api-openapi.yml
+  - type: Documentation
+    url: https://theloopbreaker.com/llms.txt
+  - type: APIReference
+    url: https://theloopbreaker.com/agents.txt
+  - type: GettingStarted
+    url: https://theloopbreaker.com/start
+  - type: ErrorCatalog
+    url: errors/theloopbreaker-com-problem-types.yml
+  - type: Webhooks
+    url: asyncapi/theloopbreaker-com-webhooks.yml
+  - type: DataModel
+    url: data-model/theloopbreaker-com-data-model.yml
+  - type: ToolCrosswalk
+    url: mcp/theloopbreaker-com-tool-crosswalk.yml
+- aid: theloopbreaker-com:theloopbreaker-com-bonds-api
+  name: Vaultfire Protocol Bonds API
+  description: Partnership and accountability bonds
+  humanURL: https://theloopbreaker.com/start
+  baseURL: https://theloopbreaker.com/api
+  tags:
+  - Bonds
+  properties:
+  - type: OpenAPI
+    url: openapi/theloopbreaker-com-bonds-api-openapi.yml
+  - type: Documentation
+    url: https://theloopbreaker.com/llms.txt
+  - type: APIReference
+    url: https://theloopbreaker.com/agents.txt
+  - type: GettingStarted
+    url: https://theloopbreaker.com/start
+  - type: ErrorCatalog
+    url: errors/theloopbreaker-com-problem-types.yml
+  - type: Webhooks
+    url: asyncapi/theloopbreaker-com-webhooks.yml
+  - type: DataModel
+    url: data-model/theloopbreaker-com-data-model.yml
+  - type: ToolCrosswalk
+    url: mcp/theloopbreaker-com-tool-crosswalk.yml
+- aid: theloopbreaker-com:theloopbreaker-com-bridge-api
+  name: Vaultfire Protocol Bridge API
+  description: Cross-chain trust sync
+  humanURL: https://theloopbreaker.com/start
+  baseURL: https://theloopbreaker.com/api
+  tags:
+  - Bridge
+  properties:
+  - type: OpenAPI
+    url: openapi/theloopbreaker-com-bridge-api-openapi.yml
+  - type: Documentation
+    url: https://theloopbreaker.com/llms.txt
+  - type: APIReference
+    url: https://theloopbreaker.com/agents.txt
+  - type: GettingStarted
+    url: https://theloopbreaker.com/start
+  - type: ErrorCatalog
+    url: errors/theloopbreaker-com-problem-types.yml
+  - type: Webhooks
+    url: asyncapi/theloopbreaker-com-webhooks.yml
+  - type: DataModel
+    url: data-model/theloopbreaker-com-data-model.yml
+  - type: ToolCrosswalk
+    url: mcp/theloopbreaker-com-tool-crosswalk.yml
+- aid: theloopbreaker-com:theloopbreaker-com-compliance-api
+  name: Vaultfire Protocol Compliance API
+  description: Mission enforcement, privacy, validation
+  humanURL: https://theloopbreaker.com/start
+  baseURL: https://theloopbreaker.com/api
+  tags:
+  - Compliance
+  properties:
+  - type: OpenAPI
+    url: openapi/theloopbreaker-com-compliance-api-openapi.yml
+  - type: Documentation
+    url: https://theloopbreaker.com/llms.txt
+  - type: APIReference
+    url: https://theloopbreaker.com/agents.txt
+  - type: GettingStarted
+    url: https://theloopbreaker.com/start
+  - type: ErrorCatalog
+    url: errors/theloopbreaker-com-problem-types.yml
+  - type: Webhooks
+    url: asyncapi/theloopbreaker-com-webhooks.yml
+  - type: DataModel
+    url: data-model/theloopbreaker-com-data-model.yml
+  - type: ToolCrosswalk
+    url: mcp/theloopbreaker-com-tool-crosswalk.yml
+- aid: theloopbreaker-com:theloopbreaker-com-discovery-api
+  name: Vaultfire Protocol Discovery API
+  description: Agent directory and search
+  humanURL: https://theloopbreaker.com/start
+  baseURL: https://theloopbreaker.com/api
+  tags:
+  - Discovery
+  properties:
+  - type: OpenAPI
+    url: openapi/theloopbreaker-com-discovery-api-openapi.yml
+  - type: Documentation
+    url: https://theloopbreaker.com/llms.txt
+  - type: APIReference
+    url: https://theloopbreaker.com/agents.txt
+  - type: GettingStarted
+    url: https://theloopbreaker.com/start
+  - type: ErrorCatalog
+    url: errors/theloopbreaker-com-problem-types.yml
+  - type: Webhooks
+    url: asyncapi/theloopbreaker-com-webhooks.yml
+  - type: DataModel
+    url: data-model/theloopbreaker-com-data-model.yml
+  - type: ToolCrosswalk
+    url: mcp/theloopbreaker-com-tool-crosswalk.yml
+- aid: theloopbreaker-com:theloopbreaker-com-disputes-api
+  name: Vaultfire Protocol Disputes API
+  description: Dispute resolution
+  humanURL: https://theloopbreaker.com/start
+  baseURL: https://theloopbreaker.com/api
+  tags:
+  - Disputes
+  properties:
+  - type: OpenAPI
+    url: openapi/theloopbreaker-com-disputes-api-openapi.yml
+  - type: Documentation
+    url: https://theloopbreaker.com/llms.txt
+  - type: APIReference
+    url: https://theloopbreaker.com/agents.txt
+  - type: GettingStarted
+    url: https://theloopbreaker.com/start
+  - type: ErrorCatalog
+    url: errors/theloopbreaker-com-problem-types.yml
+  - type: Webhooks
+    url: asyncapi/theloopbreaker-com-webhooks.yml
+  - type: DataModel
+    url: data-model/theloopbreaker-com-data-model.yml
+  - type: ToolCrosswalk
+    url: mcp/theloopbreaker-com-tool-crosswalk.yml
+- aid: theloopbreaker-com:theloopbreaker-com-governance-api
+  name: Vaultfire Protocol Governance API
+  description: Multisig governance
+  humanURL: https://theloopbreaker.com/start
+  baseURL: https://theloopbreaker.com/api
+  tags:
+  - Governance
+  properties:
+  - type: OpenAPI
+    url: openapi/theloopbreaker-com-governance-api-openapi.yml
+  - type: Documentation
+    url: https://theloopbreaker.com/llms.txt
+  - type: APIReference
+    url: https://theloopbreaker.com/agents.txt
+  - type: GettingStarted
+    url: https://theloopbreaker.com/start
+  - type: ErrorCatalog
+    url: errors/theloopbreaker-com-problem-types.yml
+  - type: Webhooks
+    url: asyncapi/theloopbreaker-com-webhooks.yml
+  - type: DataModel
+    url: data-model/theloopbreaker-com-data-model.yml
+  - type: ToolCrosswalk
+    url: mcp/theloopbreaker-com-tool-crosswalk.yml
+- aid: theloopbreaker-com:theloopbreaker-com-identity-api
+  name: Vaultfire Protocol Identity API
+  description: VNS naming service
+  humanURL: https://theloopbreaker.com/start
+  baseURL: https://theloopbreaker.com/api
+  tags:
+  - Identity
+  properties:
+  - type: OpenAPI
+    url: openapi/theloopbreaker-com-identity-api-openapi.yml
+  - type: Documentation
+    url: https://theloopbreaker.com/llms.txt
+  - type: APIReference
+    url: https://theloopbreaker.com/agents.txt
+  - type: GettingStarted
+    url: https://theloopbreaker.com/start
+  - type: ErrorCatalog
+    url: errors/theloopbreaker-com-problem-types.yml
+  - type: Webhooks
+    url: asyncapi/theloopbreaker-com-webhooks.yml
+  - type: DataModel
+    url: data-model/theloopbreaker-com-data-model.yml
+  - type: ToolCrosswalk
+    url: mcp/theloopbreaker-com-tool-crosswalk.yml
+- aid: theloopbreaker-com:theloopbreaker-com-insurance-api
+  name: Vaultfire Protocol Insurance API
+  description: Bond insurance pool
+  humanURL: https://theloopbreaker.com/start
+  baseURL: https://theloopbreaker.com/api
+  tags:
+  - Insurance
+  properties:
+  - type: OpenAPI
+    url: openapi/theloopbreaker-com-insurance-api-openapi.yml
+  - type: Documentation
+    url: https://theloopbreaker.com/llms.txt
+  - type: APIReference
+    url: https://theloopbreaker.com/agents.txt
+  - type: GettingStarted
+    url: https://theloopbreaker.com/start
+  - type: ErrorCatalog
+    url: errors/theloopbreaker-com-problem-types.yml
+  - type: Webhooks
+    url: asyncapi/theloopbreaker-com-webhooks.yml
+  - type: DataModel
+    url: data-model/theloopbreaker-com-data-model.yml
+  - type: ToolCrosswalk
+    url: mcp/theloopbreaker-com-tool-crosswalk.yml
+- aid: theloopbreaker-com:theloopbreaker-com-keys-api
+  name: Vaultfire Protocol Keys API
+  description: Vaultfire Key Protocol — session keys, delegation, wallets
+  humanURL: https://theloopbreaker.com/start
+  baseURL: https://theloopbreaker.com/api
+  tags:
+  - Keys
+  properties:
+  - type: OpenAPI
+    url: openapi/theloopbreaker-com-keys-api-openapi.yml
+  - type: Documentation
+    url: https://theloopbreaker.com/llms.txt
+  - type: APIReference
+    url: https://theloopbreaker.com/agents.txt
+  - type: GettingStarted
+    url: https://theloopbreaker.com/start
+  - type: ErrorCatalog
+    url: errors/theloopbreaker-com-problem-types.yml
+  - type: Webhooks
+    url: asyncapi/theloopbreaker-com-webhooks.yml
+  - type: DataModel
+    url: data-model/theloopbreaker-com-data-model.yml
+  - type: ToolCrosswalk
+    url: mcp/theloopbreaker-com-tool-crosswalk.yml
+- aid: theloopbreaker-com:theloopbreaker-com-protocol-api
+  name: Vaultfire Protocol Protocol API
+  description: Protocol-wide stats and contracts
+  humanURL: https://theloopbreaker.com/start
+  baseURL: https://theloopbreaker.com/api
+  tags:
+  - Protocol
+  properties:
+  - type: OpenAPI
+    url: openapi/theloopbreaker-com-protocol-api-openapi.yml
+  - type: Documentation
+    url: https://theloopbreaker.com/llms.txt
+  - type: APIReference
+    url: https://theloopbreaker.com/agents.txt
+  - type: GettingStarted
+    url: https://theloopbreaker.com/start
+  - type: ErrorCatalog
+    url: errors/theloopbreaker-com-problem-types.yml
+  - type: Webhooks
+    url: asyncapi/theloopbreaker-com-webhooks.yml
+  - type: DataModel
+    url: data-model/theloopbreaker-com-data-model.yml
+  - type: ToolCrosswalk
+    url: mcp/theloopbreaker-com-tool-crosswalk.yml
+- aid: theloopbreaker-com:theloopbreaker-com-routing-api
+  name: Vaultfire Protocol Routing API
+  description: Task routing and matching
+  humanURL: https://theloopbreaker.com/start
+  baseURL: https://theloopbreaker.com/api
+  tags:
+  - Routing
+  properties:
+  - type: OpenAPI
+    url: openapi/theloopbreaker-com-routing-api-openapi.yml
+  - type: Documentation
+    url: https://theloopbreaker.com/llms.txt
+  - type: APIReference
+    url: https://theloopbreaker.com/agents.txt
+  - type: GettingStarted
+    url: https://theloopbreaker.com/start
+  - type: ErrorCatalog
+    url: errors/theloopbreaker-com-problem-types.yml
+  - type: Webhooks
+    url: asyncapi/theloopbreaker-com-webhooks.yml
+  - type: DataModel
+    url: data-model/theloopbreaker-com-data-model.yml
+  - type: ToolCrosswalk
+    url: mcp/theloopbreaker-com-tool-crosswalk.yml
+- aid: theloopbreaker-com:theloopbreaker-com-system-api
+  name: Vaultfire Protocol System API
+  description: Health and system status
+  humanURL: https://theloopbreaker.com/start
+  baseURL: https://theloopbreaker.com/api
+  tags:
+  - System
+  properties:
+  - type: OpenAPI
+    url: openapi/theloopbreaker-com-system-api-openapi.yml
+  - type: Documentation
+    url: https://theloopbreaker.com/llms.txt
+  - type: APIReference
+    url: https://theloopbreaker.com/agents.txt
+  - type: GettingStarted
+    url: https://theloopbreaker.com/start
+  - type: ErrorCatalog
+    url: errors/theloopbreaker-com-problem-types.yml
+  - type: Webhooks
+    url: asyncapi/theloopbreaker-com-webhooks.yml
+  - type: DataModel
+    url: data-model/theloopbreaker-com-data-model.yml
+  - type: ToolCrosswalk
+    url: mcp/theloopbreaker-com-tool-crosswalk.yml
+- aid: theloopbreaker-com:theloopbreaker-com-tasks-api
+  name: Vaultfire Protocol Tasks API
+  description: Task marketplace with USDC escrow
+  humanURL: https://theloopbreaker.com/start
+  baseURL: https://theloopbreaker.com/api
+  tags:
+  - Tasks
+  properties:
+  - type: OpenAPI
+    url: openapi/theloopbreaker-com-tasks-api-openapi.yml
+  - type: Documentation
+    url: https://theloopbreaker.com/llms.txt
+  - type: APIReference
+    url: https://theloopbreaker.com/agents.txt
+  - type: GettingStarted
+    url: https://theloopbreaker.com/start
+  - type: ErrorCatalog
+    url: errors/theloopbreaker-com-problem-types.yml
+  - type: Webhooks
+    url: asyncapi/theloopbreaker-com-webhooks.yml
+  - type: DataModel
+    url: data-model/theloopbreaker-com-data-model.yml
+  - type: ToolCrosswalk
+    url: mcp/theloopbreaker-com-tool-crosswalk.yml
+- aid: theloopbreaker-com:theloopbreaker-com-trust-api
+  name: Vaultfire Protocol Trust API
+  description: Reputation, vouching, credentials, oracles
+  humanURL: https://theloopbreaker.com/start
+  baseURL: https://theloopbreaker.com/api
+  tags:
+  - Trust
+  properties:
+  - type: OpenAPI
+    url: openapi/theloopbreaker-com-trust-api-openapi.yml
+  - type: Documentation
+    url: https://theloopbreaker.com/llms.txt
+  - type: APIReference
+    url: https://theloopbreaker.com/agents.txt
+  - type: GettingStarted
+    url: https://theloopbreaker.com/start
+  - type: ErrorCatalog
+    url: errors/theloopbreaker-com-problem-types.yml
+  - type: Webhooks
+    url: asyncapi/theloopbreaker-com-webhooks.yml
+  - type: DataModel
+    url: data-model/theloopbreaker-com-data-model.yml
+  - type: ToolCrosswalk
+    url: mcp/theloopbreaker-com-tool-crosswalk.yml
+- aid: theloopbreaker-com:theloopbreaker-com-webhooks-api
+  name: Vaultfire Protocol Webhooks API
+  description: Event subscriptions
+  humanURL: https://theloopbreaker.com/start
+  baseURL: https://theloopbreaker.com/api
+  tags:
+  - Webhooks
+  properties:
+  - type: OpenAPI
+    url: openapi/theloopbreaker-com-webhooks-api-openapi.yml
+  - type: Documentation
+    url: https://theloopbreaker.com/llms.txt
+  - type: APIReference
+    url: https://theloopbreaker.com/agents.txt
+  - type: GettingStarted
+    url: https://theloopbreaker.com/start
+  - type: ErrorCatalog
+    url: errors/theloopbreaker-com-problem-types.yml
+  - type: Webhooks
+    url: asyncapi/theloopbreaker-com-webhooks.yml
+  - type: DataModel
+    url: data-model/theloopbreaker-com-data-model.yml
+  - type: ToolCrosswalk
+    url: mcp/theloopbreaker-com-tool-crosswalk.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: Overlay
+  url: overlays/theloopbreaker-com-openapi-overlay.yaml
 - type: VulnerabilityDisclosure
   url: security/theloopbreaker-com-vulnerability-disclosure.yml
 - type: Website
@@ -176,3 +545,10 @@ x-enrichment:
   status: enriched
   artifacts_added: 36
   pass: local-v3
+x-a2a:
+  verified: true
+  probed: '2026-09-26'
+  url: "https://theloopbreaker.com/.well-known/agent-card.json"
+  grade: "near-conformant"
+  protocol_version: "0.3.0"
+  control: 404

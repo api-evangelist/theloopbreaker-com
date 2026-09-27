@@ -1,0 +1,167 @@
+openapi: 3.2.0
+info:
+  title: Theloopbreaker Com Trust API
+  version: 3.4.0
+  contact:
+    url: https://theloopbreaker.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  description: 'Operations tagged Trust across 2 of this provider''s published API definitions: theloopbreaker-com-openapi.json, theloopbreaker-com-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://theloopbreaker.com/api
+  description: Production
+tags:
+- name: Trust
+  description: Reputation, vouching, credentials, oracles
+paths:
+  /agent/trust:
+    get:
+      operationId: getZKTrust
+      summary: ZK trust attestation status from VaultfireTrustAttestation
+      tags:
+      - Trust
+      parameters:
+      - name: chain
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: address
+        in: query
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ZK trust attestation data
+    servers:
+    - url: https://theloopbreaker.com/api
+      description: Production
+  /agent/attestation:
+    get:
+      operationId: getBeliefAttestation
+      summary: Belief attestation — belief-weighted governance, Dilithium post-quantum proofs
+      tags:
+      - Trust
+      parameters:
+      - name: chain
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: address
+        in: query
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: BeliefAttestationVerifier + DilithiumAttestor data
+    servers:
+    - url: https://theloopbreaker.com/api
+      description: Production
+  /agent/flourishing:
+    get:
+      operationId: getFlourishingMetrics
+      summary: Human flourishing metrics from FlourishingMetricsOracle
+      tags:
+      - Trust
+      parameters:
+      - name: chain
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: address
+        in: query
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Flourishing metrics
+    servers:
+    - url: https://theloopbreaker.com/api
+      description: Production
+  /agent/vouching:
+    get:
+      operationId: getVouchProfile
+      summary: Get agent vouching profile — stakes received, given, slash count
+      description: Query the VaultfireReputationStaking contract for an agent's vouch profile. Returns total vouches received/given, stake amounts, and slash count.
+      tags:
+      - Trust
+      parameters:
+      - name: address
+        in: query
+        required: true
+        schema:
+          type: string
+        description: Agent address to look up
+      - name: chain
+        in: query
+        schema:
+          type: string
+          default: base
+        description: Chain to query
+      responses:
+        '200':
+          description: Vouch profile with stakes and slash history
+    servers:
+    - url: https://theloopbreaker.com/api
+      description: Production
+  /agent/performance:
+    get:
+      operationId: getPerformance
+      summary: Get agent performance attestations — completion rate, response time, accuracy
+      description: Query the VaultfireTrustOracle for verifiable off-chain performance data.
+      tags:
+      - Trust
+      parameters:
+      - name: address
+        in: query
+        required: true
+        schema:
+          type: string
+        description: Agent address to look up
+      - name: chain
+        in: query
+        schema:
+          type: string
+          default: base
+        description: Chain to query
+      responses:
+        '200':
+          description: Performance data with completion rate and response time
+    servers:
+    - url: https://theloopbreaker.com/api
+      description: Production
+  /agent/credentials:
+    get:
+      operationId: getCredentials
+      summary: Get on-chain capability credentials for an agent
+      description: Query the VaultfireCapabilityCredentials contract for verified skills and certifications.
+      tags:
+      - Trust
+      parameters:
+      - name: address
+        in: query
+        required: true
+        schema:
+          type: string
+        description: Agent address to look up
+      - name: chain
+        in: query
+        schema:
+          type: string
+          default: base
+        description: Chain to query
+      responses:
+        '200':
+          description: Agent credentials with skills, issuers, and validity
+    servers:
+    - url: https://theloopbreaker.com/api
+      description: Production
+x-refined-from:
+- theloopbreaker-com-openapi.json
+- theloopbreaker-com-openapi.yml

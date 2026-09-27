@@ -1,0 +1,72 @@
+openapi: 3.2.0
+info:
+  title: Theloopbreaker Com Tasks API
+  version: 3.4.0
+  contact:
+    url: https://theloopbreaker.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  description: 'Operations tagged Tasks across 2 of this provider''s published API definitions: theloopbreaker-com-openapi.json, theloopbreaker-com-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://theloopbreaker.com/api
+  description: Production
+tags:
+- name: Tasks
+  description: Task marketplace with USDC escrow
+paths:
+  /agent/tasks:
+    get:
+      operationId: getTaskStats
+      summary: Task escrow stats — total tasks, protocol fee
+      tags:
+      - Tasks
+      parameters:
+      - name: chain
+        in: query
+        required: true
+        schema:
+          type: string
+          enum:
+          - base
+          - avalanche
+          - arbitrum
+          - polygon
+      responses:
+        '200':
+          description: Task escrow stats from VaultfireTaskEscrow
+    post:
+      operationId: prepareTask
+      summary: Prepare a createTask transaction on VaultfireTaskEscrow
+      tags:
+      - Tasks
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - walletAddress
+              - usdcAmount
+              properties:
+                walletAddress:
+                  type: string
+                usdcAmount:
+                  type: number
+                description:
+                  type: string
+                deadline:
+                  type: number
+                chain:
+                  type: string
+                  default: base
+      responses:
+        '200':
+          description: Contract address and ABI for task creation
+    servers:
+    - url: https://theloopbreaker.com/api
+      description: Production
+x-refined-from:
+- theloopbreaker-com-openapi.json
+- theloopbreaker-com-openapi.yml

@@ -1,0 +1,43 @@
+openapi: 3.2.0
+info:
+  title: Theloopbreaker Com Analytics API
+  version: 3.4.0
+  contact:
+    url: https://theloopbreaker.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  description: 'Operations tagged Analytics across 2 of this provider''s published API definitions: theloopbreaker-com-openapi.json, theloopbreaker-com-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://theloopbreaker.com/api
+  description: Production
+tags:
+- name: Analytics
+  description: Agent performance analytics
+paths:
+  /agent/analytics:
+    get:
+      operationId: getAgentAnalytics
+      summary: Agent performance analytics and trends
+      tags:
+      - Analytics
+      parameters:
+      - name: address
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: chain
+        in: query
+        schema:
+          type: string
+          default: base
+      responses:
+        '200':
+          description: Analytics with trust history and activity summary
+    servers:
+    - url: https://theloopbreaker.com/api
+      description: Production
+x-refined-from:
+- theloopbreaker-com-openapi.json
+- theloopbreaker-com-openapi.yml

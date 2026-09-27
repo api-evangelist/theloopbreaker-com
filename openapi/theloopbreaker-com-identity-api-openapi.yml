@@ -1,0 +1,55 @@
+openapi: 3.2.0
+info:
+  title: Theloopbreaker Com Identity API
+  version: 3.4.0
+  contact:
+    url: https://theloopbreaker.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  description: 'Operations tagged Identity across 2 of this provider''s published API definitions: theloopbreaker-com-openapi.json, theloopbreaker-com-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://theloopbreaker.com/api
+  description: Production
+tags:
+- name: Identity
+  description: VNS naming service
+paths:
+  /agent/vns:
+    get:
+      operationId: resolveVNS
+      summary: Resolve a .vns name or reverse-resolve an address
+      tags:
+      - Identity
+      parameters:
+      - name: chain
+        in: query
+        required: true
+        schema:
+          type: string
+          enum:
+          - base
+          - arbitrum
+          - polygon
+        description: VNS available on Base, Arbitrum, Polygon (not Avalanche)
+      - name: name
+        in: query
+        required: false
+        schema:
+          type: string
+        description: VNS name to resolve
+      - name: address
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Address to reverse-resolve
+      responses:
+        '200':
+          description: VNS resolution result
+    servers:
+    - url: https://theloopbreaker.com/api
+      description: Production
+x-refined-from:
+- theloopbreaker-com-openapi.json
+- theloopbreaker-com-openapi.yml

@@ -1,0 +1,67 @@
+openapi: 3.2.0
+info:
+  title: Theloopbreaker Com Routing API
+  version: 3.4.0
+  contact:
+    url: https://theloopbreaker.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  description: 'Operations tagged Routing across 2 of this provider''s published API definitions: theloopbreaker-com-openapi.json, theloopbreaker-com-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://theloopbreaker.com/api
+  description: Production
+tags:
+- name: Routing
+  description: Task routing and matching
+paths:
+  /agent/route:
+    post:
+      operationId: routeTask
+      summary: Multi-agent routing — match a task to the best agent
+      tags:
+      - Routing
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - task
+              properties:
+                task:
+                  type: string
+                  description: Task description
+                requiredCapabilities:
+                  type: array
+                  items:
+                    type: string
+                preferredChain:
+                  type: string
+                  enum:
+                  - base
+                  - avalanche
+                  - arbitrum
+                  - polygon
+      responses:
+        '200':
+          description: Matched agent with score and capabilities
+    servers:
+    - url: https://theloopbreaker.com/api
+      description: Production
+  /agent/routing:
+    get:
+      operationId: getRoutingHistory
+      summary: Routing history, stats, and active routes
+      tags:
+      - Routing
+      responses:
+        '200':
+          description: Routing activity
+    servers:
+    - url: https://theloopbreaker.com/api
+      description: Production
+x-refined-from:
+- theloopbreaker-com-openapi.json
+- theloopbreaker-com-openapi.yml

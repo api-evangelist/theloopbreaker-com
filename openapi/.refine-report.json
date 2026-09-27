@@ -1,0 +1,55 @@
+{
+  "provider": "theloopbreaker-com",
+  "sources": [
+    "_original/theloopbreaker-com-openapi.json",
+    "theloopbreaker-com-openapi.yml"
+  ],
+  "outputs": [
+    "theloopbreaker-com-agent-api-openapi.yml",
+    "theloopbreaker-com-analytics-api-openapi.yml",
+    "theloopbreaker-com-bonds-api-openapi.yml",
+    "theloopbreaker-com-bridge-api-openapi.yml",
+    "theloopbreaker-com-compliance-api-openapi.yml",
+    "theloopbreaker-com-discovery-api-openapi.yml",
+    "theloopbreaker-com-disputes-api-openapi.yml",
+    "theloopbreaker-com-governance-api-openapi.yml",
+    "theloopbreaker-com-identity-api-openapi.yml",
+    "theloopbreaker-com-insurance-api-openapi.yml",
+    "theloopbreaker-com-keys-api-openapi.yml",
+    "theloopbreaker-com-protocol-api-openapi.yml",
+    "theloopbreaker-com-routing-api-openapi.yml",
+    "theloopbreaker-com-system-api-openapi.yml",
+    "theloopbreaker-com-tasks-api-openapi.yml",
+    "theloopbreaker-com-trust-api-openapi.yml",
+    "theloopbreaker-com-webhooks-api-openapi.yml"
+  ],
+  "archived": [
+    "archived openapi/theloopbreaker-com-openapi.yml"
+  ],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "theloopbreaker-com-openapi.json: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "theloopbreaker-com-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "tag 'Agent' spans 2 source specs (theloopbreaker-com-openapi.json, theloopbreaker-com-openapi.yml): per-path servers applied",
+    "tag 'Analytics' spans 2 source specs (theloopbreaker-com-openapi.json, theloopbreaker-com-openapi.yml): per-path servers applied",
+    "tag 'Bonds' spans 2 source specs (theloopbreaker-com-openapi.json, theloopbreaker-com-openapi.yml): per-path servers applied",
+    "tag 'Bridge' spans 2 source specs (theloopbreaker-com-openapi.json, theloopbreaker-com-openapi.yml): per-path servers applied",
+    "tag 'Compliance' spans 2 source specs (theloopbreaker-com-openapi.json, theloopbreaker-com-openapi.yml): per-path servers applied",
+    "tag 'Discovery' spans 2 source specs (theloopbreaker-com-openapi.json, theloopbreaker-com-openapi.yml): per-path servers applied",
+    "tag 'Disputes' spans 2 source specs (theloopbreaker-com-openapi.json, theloopbreaker-com-openapi.yml): per-path servers applied",
+    "tag 'Governance' spans 2 source specs (theloopbreaker-com-openapi.json, theloopbreaker-com-openapi.yml): per-path servers applied",
+    "tag 'Identity' spans 2 source specs (theloopbreaker-com-openapi.json, theloopbreaker-com-openapi.yml): per-path servers applied",
+    "tag 'Insurance' spans 2 source specs (theloopbreaker-com-openapi.json, theloopbreaker-com-openapi.yml): per-path servers applied",
+    "tag 'Keys' spans 2 source specs (theloopbreaker-com-openapi.json, theloopbreaker-com-openapi.yml): per-path servers applied",
+    "tag 'Protocol' spans 2 source specs (theloopbreaker-com-openapi.json, theloopbreaker-com-openapi.yml): per-path servers applied",
+    "tag 'Routing' spans 2 source specs (theloopbreaker-com-openapi.json, theloopbreaker-com-openapi.yml): per-path servers applied",
+    "tag 'System' spans 2 source specs (theloopbreaker-com-openapi.json, theloopbreaker-com-openapi.yml): per-path servers applied",
+    "tag 'Tasks' spans 2 source specs (theloopbreaker-com-openapi.json, theloopbreaker-com-openapi.yml): per-path servers applied",
+    "tag 'Trust' spans 2 source specs (theloopbreaker-com-openapi.json, theloopbreaker-com-openapi.yml): per-path servers applied",
+    "tag 'Webhooks' spans 2 source specs (theloopbreaker-com-openapi.json, theloopbreaker-com-openapi.yml): per-path servers applied",
+    "apis.yml register: written (+17 apis, 18 total)"
+  ],
+  "skipped": []
+}

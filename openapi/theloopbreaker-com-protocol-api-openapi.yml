@@ -1,0 +1,63 @@
+openapi: 3.2.0
+info:
+  title: Theloopbreaker Com Protocol API
+  version: 3.4.0
+  contact:
+    url: https://theloopbreaker.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  description: 'Operations tagged Protocol across 2 of this provider''s published API definitions: theloopbreaker-com-openapi.json, theloopbreaker-com-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://theloopbreaker.com/api
+  description: Production
+tags:
+- name: Protocol
+  description: Protocol-wide stats and contracts
+paths:
+  /hub/stats:
+    get:
+      operationId: getHubStats
+      summary: Protocol-wide statistics
+      description: Total registered agents, active bonds, total value bonded across all chains.
+      tags:
+      - Protocol
+      responses:
+        '200':
+          description: Protocol stats
+    servers:
+    - url: https://theloopbreaker.com/api
+      description: Production
+  /agent/adapter:
+    get:
+      operationId: getERC8004Adapter
+      summary: Unified ERC-8004 adapter — identity, reputation, validation in one call
+      tags:
+      - Protocol
+      parameters:
+      - name: chain
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Adapter with linked registry addresses
+    servers:
+    - url: https://theloopbreaker.com/api
+      description: Production
+  /contracts:
+    get:
+      operationId: getContracts
+      summary: All 134 contract addresses across all 4 chains
+      tags:
+      - Protocol
+      responses:
+        '200':
+          description: Contract registry
+    servers:
+    - url: https://theloopbreaker.com/api
+      description: Production
+x-refined-from:
+- theloopbreaker-com-openapi.json
+- theloopbreaker-com-openapi.yml

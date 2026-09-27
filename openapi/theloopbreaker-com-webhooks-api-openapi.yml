@@ -1,0 +1,101 @@
+openapi: 3.2.0
+info:
+  title: Theloopbreaker Com Webhooks API
+  version: 3.4.0
+  contact:
+    url: https://theloopbreaker.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  description: 'Operations tagged Webhooks across 2 of this provider''s published API definitions: theloopbreaker-com-openapi.json, theloopbreaker-com-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://theloopbreaker.com/api
+  description: Production
+tags:
+- name: Webhooks
+  description: Event subscriptions
+paths:
+  /agent/webhooks:
+    get:
+      operationId: listWebhooks
+      summary: List registered webhooks or show valid events
+      tags:
+      - Webhooks
+      parameters:
+      - name: address
+        in: query
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Webhook list or event catalog
+    post:
+      operationId: registerWebhook
+      summary: Register a webhook for event notifications
+      tags:
+      - Webhooks
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - address
+              - url
+              - events
+              properties:
+                address:
+                  type: string
+                  description: Your agent address (0x...)
+                url:
+                  type: string
+                  description: HTTPS webhook URL
+                events:
+                  type: array
+                  items:
+                    type: string
+                    enum:
+                    - bond.created
+                    - bond.activated
+                    - bond.completed
+                    - reputation.updated
+                    - credential.issued
+                    - credential.revoked
+                    - dispute.filed
+                    - dispute.resolved
+                    - bridge.synced
+                    - insurance.claim_filed
+                    - insurance.payout
+                    - agent.registered
+                    - vouch.received
+                    - vouch.slashed
+                    - task.assigned
+                    - task.completed
+                chain:
+                  type: string
+                  default: all
+      responses:
+        '201':
+          description: Webhook registered with signing secret
+    delete:
+      operationId: deleteWebhook
+      summary: Remove a webhook
+      tags:
+      - Webhooks
+      parameters:
+      - name: id
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Webhook deleted
+    servers:
+    - url: https://theloopbreaker.com/api
+      description: Production
+x-refined-from:
+- theloopbreaker-com-openapi.json
+- theloopbreaker-com-openapi.yml

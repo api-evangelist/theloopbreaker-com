@@ -1,0 +1,45 @@
+openapi: 3.2.0
+info:
+  title: Theloopbreaker Com Disputes API
+  version: 3.4.0
+  contact:
+    url: https://theloopbreaker.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  description: 'Operations tagged Disputes across 2 of this provider''s published API definitions: theloopbreaker-com-openapi.json, theloopbreaker-com-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://theloopbreaker.com/api
+  description: Production
+tags:
+- name: Disputes
+  description: Dispute resolution
+paths:
+  /agent/disputes:
+    get:
+      operationId: getDisputes
+      summary: Get dispute resolution stats and dispute details
+      description: Query the VaultfireDisputeResolution contract for dispute statistics or individual dispute details.
+      tags:
+      - Disputes
+      parameters:
+      - name: chain
+        in: query
+        schema:
+          type: string
+          default: base
+        description: Chain to query
+      - name: disputeId
+        in: query
+        schema:
+          type: integer
+        description: Optional specific dispute ID to look up
+      responses:
+        '200':
+          description: Dispute stats or individual dispute details
+    servers:
+    - url: https://theloopbreaker.com/api
+      description: Production
+x-refined-from:
+- theloopbreaker-com-openapi.json
+- theloopbreaker-com-openapi.yml

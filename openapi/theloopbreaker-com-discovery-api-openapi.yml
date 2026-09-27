@@ -1,0 +1,32 @@
+openapi: 3.2.0
+info:
+  title: Theloopbreaker Com Discovery API
+  version: 3.4.0
+  contact:
+    url: https://theloopbreaker.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  description: 'Operations tagged Discovery across 2 of this provider''s published API definitions: theloopbreaker-com-openapi.json, theloopbreaker-com-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://theloopbreaker.com/api
+  description: Production
+tags:
+- name: Discovery
+  description: Agent directory and search
+paths:
+  /agent/discover:
+    get:
+      operationId: discoverAgents
+      summary: Agent directory — paginated list of all registered agents
+      tags:
+      - Discovery
+      responses:
+        '200':
+          description: Agent list
+    servers:
+    - url: https://theloopbreaker.com/api
+      description: Production
+x-refined-from:
+- theloopbreaker-com-openapi.json
+- theloopbreaker-com-openapi.yml

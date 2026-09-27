@@ -1,0 +1,33 @@
+openapi: 3.2.0
+info:
+  title: Theloopbreaker Com System API
+  version: 3.4.0
+  contact:
+    url: https://theloopbreaker.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  description: 'Operations tagged System across 2 of this provider''s published API definitions: theloopbreaker-com-openapi.json, theloopbreaker-com-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://theloopbreaker.com/api
+  description: Production
+tags:
+- name: System
+  description: Health and system status
+paths:
+  /health:
+    get:
+      operationId: getHealth
+      summary: System health check
+      description: Chain connectivity, API status, uptime. Call before committing to using the platform.
+      tags:
+      - System
+      responses:
+        '200':
+          description: Health status with per-chain connectivity
+    servers:
+    - url: https://theloopbreaker.com/api
+      description: Production
+x-refined-from:
+- theloopbreaker-com-openapi.json
+- theloopbreaker-com-openapi.yml
