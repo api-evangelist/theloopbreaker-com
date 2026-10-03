@@ -1,13 +1,13 @@
 openapi: 3.2.0
 info:
-  title: Theloopbreaker Com Routing API
+  title: Vaultfire Agent Hub Routing API
   version: 3.4.0
+  description: The trust infrastructure for AI agents. On-chain identity, verifiable reputation, partnership bonds, task marketplace, cross-chain bridge, and more. All endpoints are public and require no authentication for reads.
   contact:
     url: https://theloopbreaker.com
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
-  description: 'Operations tagged Routing across 2 of this provider''s published API definitions: theloopbreaker-com-openapi.json, theloopbreaker-com-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://theloopbreaker.com/api
   description: Production
@@ -47,9 +47,6 @@ paths:
       responses:
         '200':
           description: Matched agent with score and capabilities
-    servers:
-    - url: https://theloopbreaker.com/api
-      description: Production
   /agent/routing:
     get:
       operationId: getRoutingHistory
@@ -59,9 +56,3 @@ paths:
       responses:
         '200':
           description: Routing activity
-    servers:
-    - url: https://theloopbreaker.com/api
-      description: Production
-x-refined-from:
-- theloopbreaker-com-openapi.json
-- theloopbreaker-com-openapi.yml
