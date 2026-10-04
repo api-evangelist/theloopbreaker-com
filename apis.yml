@@ -65,6 +65,8 @@ apis:
   humanURL: https://theloopbreaker.com/start
   baseURL: https://theloopbreaker.com/api
   tags:
+  - Agents
+  tags_raw:
   - Agent
   properties:
   - type: OpenAPI
@@ -401,6 +403,8 @@ apis:
   humanURL: https://theloopbreaker.com/start
   baseURL: https://theloopbreaker.com/api
   tags:
+  - Task
+  tags_raw:
   - Tasks
   properties:
   - type: OpenAPI
@@ -449,6 +453,8 @@ apis:
   humanURL: https://theloopbreaker.com/start
   baseURL: https://theloopbreaker.com/api
   tags:
+  - Webhook
+  tags_raw:
   - Webhooks
   properties:
   - type: OpenAPI
@@ -473,6 +479,9 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: CapabilityMap
+  url: capabilities/theloopbreaker-com-capability-edges.yml
+  name: Vaultfire Protocol Business Capability Map
 - type: Overlay
   url: overlays/theloopbreaker-com-openapi-overlay.yaml
 - type: VulnerabilityDisclosure
