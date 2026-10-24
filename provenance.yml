@@ -18,6 +18,9 @@ artifacts:
   authentication/theloopbreaker-com-authentication.yml:
     method: searched
     evidence: declared in the artifact
+  capabilities/theloopbreaker-com-capability-edges.yml:
+    method: unknown
+    evidence: no authorship recorded
   changelog/theloopbreaker-com-changelog.yml:
     method: searched
     evidence: declared in the artifact
@@ -36,7 +39,10 @@ artifacts:
   front-door-ai/2026-09-17.yml:
     method: unknown
     evidence: no authorship recorded
-  kin/checks-2026-09-24T161608.yml:
+  integrations/theloopbreaker-com-integration-edges.yml:
+    method: searched
+    evidence: declared in the artifact
+  kin/checks-2026-10-11T110117.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   kin/score-2026-09-19T193153.yml:
@@ -69,6 +75,21 @@ artifacts:
   kin/score-2026-09-24T161608.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-25T210408.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-25T232841.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-10-03T000835.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-10-03T024842.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-10-11T110117.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
   lifecycle/theloopbreaker-com-lifecycle.yml:
     method: searched
     evidence: declared in the artifact
@@ -86,14 +107,66 @@ artifacts:
     evidence: declared in the artifact
   openapi/_original/theloopbreaker-com-openapi.json:
     method: harvested
-    evidence: found in openapi/_original/; the fetch URL and bytes were not recorded, so byte-identity
-      to the provider's source is unverified
-  openapi/theloopbreaker-com-openapi.yml:
+    evidence: byte-identical to https://theloopbreaker.com/api/openapi.json (sha256 a1f51d0025f0, fetched
+      2026-10-04)
+  openapi/_original/theloopbreaker-com-openapi.yml:
+    method: harvested
+    evidence: the same operations as https://theloopbreaker.com/api/openapi.json (sha256 a1f51d0025f0,
+      fetched 2026-10-04)
+  openapi/theloopbreaker-com-agent-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/theloopbreaker-com-analytics-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/theloopbreaker-com-bonds-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/theloopbreaker-com-bridge-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/theloopbreaker-com-compliance-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/theloopbreaker-com-discovery-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/theloopbreaker-com-disputes-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/theloopbreaker-com-governance-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/theloopbreaker-com-identity-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/theloopbreaker-com-insurance-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/theloopbreaker-com-keys-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/theloopbreaker-com-protocol-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/theloopbreaker-com-routing-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/theloopbreaker-com-system-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/theloopbreaker-com-tasks-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/theloopbreaker-com-trust-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/theloopbreaker-com-webhooks-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   overlays/theloopbreaker-com-openapi-overlay.yaml:
     method: derived
-    evidence: declared in the artifact
+    evidence: an API Evangelist overlay (title) over the provider's contract
   packages/theloopbreaker-com-packages.yml:
     method: searched
     evidence: declared in the artifact
